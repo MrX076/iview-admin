@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import iView from 'iview';
 import Util from '../libs/util';
+import store from '../store/index';
 import VueRouter from 'vue-router';
 import Cookies from 'js-cookie';
 import {routers, otherRouter, appRouter} from './router';
@@ -18,6 +19,13 @@ export const router = new VueRouter(RouterConfig);
 router.beforeEach((to, from, next) => {
     iView.LoadingBar.start();
     Util.title(to.meta.title);
+    // if (store.state.token) {
+    //     next();
+    // } else {
+    //     next({
+    //         name: 'login'
+    //     });
+    // }
     if (Cookies.get('locking') === '1' && to.name !== 'locking') { // 判断当前是否是锁定状态
         next({
             replace: true,
@@ -26,6 +34,7 @@ router.beforeEach((to, from, next) => {
     } else if (Cookies.get('locking') === '0' && to.name === 'locking') {
         next(false);
     } else {
+        // console.log(Cookies.get('user'));
         if (!Cookies.get('user') && to.name !== 'login') { // 判断是否已经登录且前往的页面不是登录页
             next({
                 name: 'login'
@@ -38,7 +47,14 @@ router.beforeEach((to, from, next) => {
         } else {
             const curRouterObj = Util.getRouterObjByName([otherRouter, ...appRouter], to.name);
             if (curRouterObj && curRouterObj.access !== undefined) { // 需要判断权限的路由
-                if (curRouterObj.access === parseInt(Cookies.get('access'))) {
+                let auths = Cookies.get('user')['authorities'];
+                let hasAuth = false;
+                for (let i = 0; i < auths.length; i++) {
+                    if (curRouterObj.access === auths[i]) {
+                        hasAuth = true;
+                    }
+                }
+                if (hasAuth) {
                     Util.toDefaultPage([otherRouter, ...appRouter], to.name, router, next); // 如果在地址栏输入的是一级菜单则默认打开其第一个二级菜单的页面
                 } else {
                     next({

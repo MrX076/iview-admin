@@ -1,15 +1,26 @@
 .login{
     width: 100%;
     height: 100%;
-    background-image: url('https://file.iviewui.com/iview-admin/login_bg.jpg');
+    background-image: url('../images/bg.b3d848b7.png');
     background-size: cover;
     background-position: center;
     position: relative;
+    .title{
+        text-align: center;
+        h1{
+            font-size: 48px;
+            color: lightgray;
+            font-family: "幼圆";
+            transform: translateY(100%);
+        }
+    }
     &-con{
-        position: absolute;
-        right: 160px;
-        top: 50%;
-        transform: translateY(-60%);
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        transform: translateY(60%);
         width: 300px;
         &-header{
             font-size: 16px;

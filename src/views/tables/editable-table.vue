@@ -66,9 +66,9 @@
                             <div class="edittable-table-height-con">
                                 <can-edit-table 
                                     refs="table4" 
-                                    v-model="editInlineAndCellData" 
-                                    @on-cell-change="handleCellChange" 
-                                    @on-change="handleChange"  
+                                    v-model="editInlineAndCellData"
+                                    @on-cell-change="handleCellChange"
+                                    @on-change="handleChange"
                                     :editIncell="true" 
                                     :columns-list="editInlineAndCellColumn"
                                 ></can-edit-table>
