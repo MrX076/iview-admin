@@ -4,6 +4,7 @@ import {router} from './router/index';
 import {appRouter} from './router/router';
 import store from './store';
 import App from './app.vue';
+import axios from './http';
 import '@/locale';
 import 'iview/dist/styles/iview.css';
 import VueI18n from 'vue-i18n';
@@ -12,10 +13,14 @@ import util from './libs/util';
 Vue.use(VueI18n);
 Vue.use(iView);
 
+// 将axios挂载到prototype上，在组件中可以直接使用this.axios访问
+Vue.prototype.axios = axios;
+
 new Vue({
     el: '#app',
     router: router,
     store: store,
+    axios: axios,
     render: h => h(App),
     data: {
         currentPageName: ''

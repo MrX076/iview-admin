@@ -11,19 +11,18 @@
                 <p slot="title" class="title">
                     <Icon type="android-remove"></Icon>
                     用户列表
-
                 </p>
                 <div class="t-button">
-                    <Button type="primary" >Primary</Button>
+                    <Button type="primary">新增</Button>
                 </div>
 
                 <div class="edittable-table-height-con">
-                    <can-edit-table refs="table2" v-model="editInlineData"
-                                    :columns-list="editInlineColumns"></can-edit-table>
+                    <can-edit-table refs="table2" v-model="userData"
+                                    :columns-list="userColumns"></can-edit-table>
                 </div>
                 <div class="page">
                     <div style="float: right;">
-                        <Page :total="100" :current="1" @on-change="changePage"></Page>
+                        <Page :total="totalPage" :current="page" @on-change="changePage"></Page>
                     </div>
                 </div>
             </Card>
@@ -34,58 +33,71 @@
 <script>
     import canEditTable from './components/canEditTable.vue';
     import tableData from './components/table_data.js';
+    import Cookies from 'js-cookie';
 
     export default {
         name: 'editable-table',
         components: {
             canEditTable
         },
-        data() {
+        data () {
             return {
-                columnsList: [],
-                tableData: [],
-                editInlineColumns: [],
-                editInlineData: [],
-                editIncellColumns: [],
-                editIncellData: [],
-                editInlineAndCellColumn: [],
-                editInlineAndCellData: [],
-                showCurrentColumns: [],
-                showCurrentTableData: false
+                userColumns: [],
+                userData: [],
+                page: 1,
+                limit: 10,
+                totalPage: 0
             };
         },
         methods: {
-            getData() {
-                this.columnsList = tableData.table1Columns;
-                this.tableData = tableData.table1Data;
-                this.editInlineColumns = tableData.editInlineColumns;
-                this.editInlineData = tableData.editInlineData;
-                this.editIncellColumns = tableData.editIncellColumns;
-                this.editIncellData = tableData.editIncellData;
-                this.editInlineAndCellColumn = tableData.editInlineAndCellColumn;
-                this.editInlineAndCellData = tableData.editInlineAndCellData;
-                this.showCurrentColumns = tableData.showCurrentColumns;
+            changePage (page) {
+                console.log('changePage:' + page);
+                this.page = page;
+                this.getData();
             },
-            handleNetConnect(state) {
+            getData () {
+                this.userColumns = tableData.userColumns;
+                // console.log(JSON.stringify(this.store));
+                let token = Cookies.get('token');
+                // console.log(token);
+                this.$Message.success(token);
+                let reqPage = this.page - 1;
+                console.log('requestt page:' + reqPage);
+                this.axios({
+                    method: 'get',
+                    url: '/api/invoice/user/list?page=' + reqPage + '&limit=' + this.limit
+                }).then(resp => {
+                    // 跳转到主页面
+
+                    let result = resp.data.result;
+                    let content = result.content;
+                    this.totalPage = result.totalElements;
+                    // this.$Message.success(JSON.stringify(content));
+                    this.userData = content;
+                }).catch(error => {
+                    this.$Message.error(error.message);
+                });
+            },
+            handleNetConnect (state) {
                 this.breakConnect = state;
             },
-            handleLowSpeed(state) {
+            handleLowSpeed (state) {
                 this.lowNetSpeed = state;
             },
-            getCurrentData() {
+            getCurrentData () {
                 this.showCurrentTableData = true;
             },
-            handleDel(val, index) {
+            handleDel (val, index) {
                 this.$Message.success('删除了第' + (index + 1) + '行数据');
             },
-            handleCellChange(val, index, key) {
+            handleCellChange (val, index, key) {
                 this.$Message.success('修改了第 ' + (index + 1) + ' 行列名为 ' + key + ' 的数据');
             },
-            handleChange(val, index) {
+            handleChange (val, index) {
                 this.$Message.success('修改了第' + (index + 1) + '行数据');
             }
         },
-        created() {
+        created () {
             this.getData();
         }
     };

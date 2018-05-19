@@ -239,8 +239,8 @@ export const showCurrentColumns = [
 const tableData = {
     table1Columns: table1Columns,
     table1Data: table1Data,
-    editInlineColumns: editInlineColumns,
-    editInlineData: editInlineData,
+    userColumns: editInlineColumns,
+    userData: editInlineData,
     editIncellColumns: editIncellColumns,
     editIncellData: editIncellData,
     editInlineAndCellColumn: editInlineAndCellColumn,

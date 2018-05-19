@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import iView from 'iview';
 import Util from '../libs/util';
+import * as types from '../store/types';
 import store from '../store/index';
 import VueRouter from 'vue-router';
 import Cookies from 'js-cookie';
@@ -13,6 +14,11 @@ const RouterConfig = {
     // mode: 'history',
     routes: routers
 };
+
+// 页面刷新时，重新赋值token
+if (window.localStorage.getItem('token')) {
+    store.commit(types.LOGIN, window.localStorage.getItem('token'));
+}
 
 export const router = new VueRouter(RouterConfig);
 

@@ -42,8 +42,6 @@
 
 <script>
     import Cookies from 'js-cookie';
-    import axios from 'axios';
-    import * as types from '../store/types';
 
     export default {
         data () {
@@ -68,7 +66,7 @@
                     if (valid) {
                         // fetch('api/auth/oauth/token').then()
                         this.$Loading.start();
-                        axios({
+                        this.axios({
                             method: 'post',
                             url: '/api/auth/oauth/token',
                             headers: {
@@ -84,11 +82,16 @@
                         }).then(resp => {
                             this.$Loading.finish();
                             let token = resp.data['access_token'];
-                            this.$Message.success('login success：' + token);
-                            // 把token存到本地
-                            this.$store.commit(types.LOGIN, token);
+                            // store把token存到本地
+                            // this.$store.commit(types.LOGIN, token);
+                            // console.log('store token ');
+                            // console.log(this.$store);
+                            // this.$Message.success('login success：' + this.$store.state.user.token);
+
+                            // cookie 存token
+                            Cookies.set('token', token);
                             // 使用token获取用户信息
-                            axios({
+                            this.axios({
                                 method: 'get',
                                 url: '/api/auth/oauth/check_token?token=' + token,
                                 headers: {
@@ -101,7 +104,7 @@
                                 this.$router.push({
                                     name: 'home_index'
                                 });
-                                this.$Message.success('login success：' + JSON.stringify(tokenResp.data));
+                                this.$Message.success('check user info success：' + JSON.stringify(tokenResp.data));
                             }).catch(error => {
                                 this.$Message.error(error.message);
                             });

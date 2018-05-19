@@ -33,7 +33,7 @@
                         可编辑单元行
                     </p>
                     <div class="edittable-table-height-con">
-                        <can-edit-table refs="table2" v-model="editInlineData" :columns-list="editInlineColumns"></can-edit-table>
+                        <can-edit-table refs="table2" v-model="userData" :columns-list="userColumns"></can-edit-table>
                     </div>
                 </Card>
             </Col>
@@ -96,8 +96,8 @@ export default {
         return {
             columnsList: [],
             tableData: [],
-            editInlineColumns: [],
-            editInlineData: [],
+            userColumns: [],
+            userData: [],
             editIncellColumns: [],
             editIncellData: [],
             editInlineAndCellColumn: [],
@@ -110,8 +110,8 @@ export default {
         getData () {
             this.columnsList = tableData.table1Columns;
             this.tableData = tableData.table1Data;
-            this.editInlineColumns = tableData.editInlineColumns;
-            this.editInlineData = tableData.editInlineData;
+            this.editInlineColumns = tableData.userColumns;
+            this.editInlineData = tableData.userData;
             this.editIncellColumns = tableData.editIncellColumns;
             this.editIncellData = tableData.editIncellData;
             this.editInlineAndCellColumn = tableData.editInlineAndCellColumn;

@@ -7,16 +7,19 @@ import axios from 'axios';
 import store from './store/index';
 import * as types from './store/types';
 import router from './router';
+import Cookies from 'js-cookie';
 
 // axios 配置
 axios.defaults.timeout = 5000;
-axios.defaults.baseURL = 'https://api.github.com';
+// axios.defaults.baseURL = 'https://api.github.com';
 
 // http request 拦截器
 axios.interceptors.request.use(
     config => {
-        if (store.state.user.token) {
-            config.headers.Authorization = `bearer ${store.state.token}`;
+        let token = Cookies.get('token');
+        console.log('http interceptor ' + token);
+        if (token && !config.headers.Authorization) {
+            config.headers.Authorization = `bearer ${token}`;
         }
         return config;
     },
@@ -36,7 +39,8 @@ axios.interceptors.response.use(
                     // 401 清除token信息并跳转到登录页面
                     store.commit(types.LOGOUT);
                     router.replace({
-                        name: 'login'
+                        path: '/login',
+                        query: {redirect: router.currentRoute.fullPath}// 登录成功后跳入浏览的当前页面
                     });
             }
         }

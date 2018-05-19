@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import * as types from "../types";
+import * as types from '../types';
 
 const user = {
     state: {

@@ -84,7 +84,7 @@ export const editInlineColumns = [
     }
 ];
 
-export const editInlineData = [
+export const userData = [
     {
         name: 'Aresn',
         sex: '男',
@@ -239,8 +239,8 @@ export const showCurrentColumns = [
 const tableData = {
     table1Columns: table1Columns,
     table1Data: table1Data,
-    editInlineColumns: editInlineColumns,
-    editInlineData: editInlineData,
+    userColumns: editInlineColumns,
+    userData: userData,
     editIncellColumns: editIncellColumns,
     editIncellData: editIncellData,
     editInlineAndCellColumn: editInlineAndCellColumn,

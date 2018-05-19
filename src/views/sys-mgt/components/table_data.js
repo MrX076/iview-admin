@@ -49,46 +49,47 @@ export const table1Data = [
     }
 ];
 
-export const editInlineColumns = [
+export const userColumns = [
     {
-        title: '序号',
-        type: 'index',
+        title: 'ID',
+        key: 'id',
         width: 80,
         align: 'center'
     },
     {
         title: '姓名',
         align: 'center',
-        key: 'name',
-        width: 90,
+        key: 'username',
+        width: 120,
         editable: true
     },
     {
-        title: '性别',
+        title: '电话',
         align: 'center',
-        key: 'sex'
+        key: 'phone'
     },
     {
-        title: '岗位',
+        title: '邮箱',
         align: 'center',
-        key: 'work',
-        width: 150,
+        width: 160,
+        key: 'email',
         editable: true
     },
     {
         title: '操作',
         align: 'center',
-        width: 190,
+        width: 120,
         key: 'handle',
-        handle: ['edit', 'delete']
+        handle: ['delete']
     }
 ];
 
-export const editInlineData = [
+export const userData = [
     {
-        name: 'Aresn',
-        sex: '男',
-        work: '前端开发'
+        id: 1,
+        username: 'root',
+        email: '123456789@163.com',
+        phone: '12345678910'
     },
     {
         name: 'Lison',
@@ -104,28 +105,28 @@ export const editInlineData = [
 
 export const editIncellColumns = [
     {
-        title: '序号',
-        type: 'index',
+        title: 'ID',
+        key: 'id',
         width: 80,
         align: 'center'
     },
     {
         title: '姓名',
         align: 'center',
-        key: 'name',
+        key: 'username',
         width: 120,
         editable: true
     },
     {
-        title: '性别',
+        title: '电话',
         align: 'center',
-        key: 'sex'
+        key: 'phone'
     },
     {
-        title: '岗位',
+        title: '邮箱',
         align: 'center',
         width: 160,
-        key: 'work',
+        key: 'email',
         editable: true
     },
     {
@@ -239,8 +240,8 @@ export const showCurrentColumns = [
 const tableData = {
     table1Columns: table1Columns,
     table1Data: table1Data,
-    editInlineColumns: editInlineColumns,
-    editInlineData: editInlineData,
+    userColumns: userColumns,
+    userData: userData,
     editIncellColumns: editIncellColumns,
     editIncellData: editIncellData,
     editInlineAndCellColumn: editInlineAndCellColumn,
