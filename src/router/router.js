@@ -201,7 +201,7 @@ export const appRouter = [
         title: '表格',
         component: Main,
         children: [
-            { path: 'dragableTable', title: '可拖拽排序', name: 'dragable-table', icon: 'arrow-move', component: () => import('@/views/biz/invoice.vue') },
+            { path: 'dragableTable', title: '可拖拽排序', name: 'dragable-table', icon: 'arrow-move', component: () => import('@/views/tables/dragable-table.vue') },
             { path: 'editableTable', title: '可编辑表格', name: 'editable-table', icon: 'edit', component: () => import('@/views/tables/editable-table.vue') },
             { path: 'searchableTable', title: '可搜索表格', name: 'searchable-table', icon: 'search', component: () => import('@/views/tables/searchable-table.vue') },
             { path: 'exportableTable', title: '表格导出数据', name: 'exportable-table', icon: 'code-download', component: () => import('@/views/tables/exportable-table.vue') },
@@ -230,28 +230,28 @@ export const appRouter = [
     //     ]
     // }
     {
-        path: '/tables',
+        path: '/biz',
         icon: 'ios-grid-view',
         name: 'biz',
         title: '业务管理',
         component: Main,
         children: [
-            { path: 'invoiceMnt', title: '发票管理', name: 'invoice-mnt', icon: 'arrow-move', component: () => import('@/views/biz/invoice.vue') },
-            { path: 'receiptMnt', title: '报销单管理', name: 'receipt-mnt', icon: 'edit', component: () => import('@/views/biz/receipt.vue') },
+            { path: 'invoiceMnt', title: '发票管理', name: 'invoice-mnt', icon: 'arrow-move', component: () => import('@/views/biz-mgt/invoice.vue') },
+            { path: 'receiptMnt', title: '报销单管理', name: 'receipt-mnt', icon: 'edit', component: () => import('@/views/biz-mgt/receipt.vue') },
             { path: 'examineMnt', title: '审核', name: 'examine-mnt', icon: 'search', component: () => import('@/views/tables/searchable-table.vue') },
             { path: 'exportableTable', title: '表格导出数据', name: 'exportable-table', icon: 'code-download', component: () => import('@/views/tables/exportable-table.vue') },
             { path: 'table2image', title: '表格转图片', name: 'table-to-image', icon: 'images', component: () => import('@/views/tables/table-to-image.vue') }
         ]
     },
     {
-        path: '/tables',
+        path: '/sys',
         icon: 'ios-grid-view',
         name: 'sys',
         title: '系统管理',
         component: Main,
         children: [
-            { path: 'userMnt', title: '用户管理', name: 'user-mnt', icon: 'arrow-move', component: () => import('@/views/biz/invoice.vue') },
-            { path: 'roleMnt', title: '角色管理', name: 'role-mnt', icon: 'edit', component: () => import('@/views/tables/editable-table.vue') },
+            { path: 'userMnt', title: '用户管理', name: 'user-mnt', icon: 'arrow-move', component: () => import('@/views/sys-mgt/user.vue') },
+            { path: 'roleMnt', title: '角色管理', name: 'role-mnt', icon: 'edit', component: () => import('@/views/sys-mgt/role.vue') },
             { path: 'menuMnt', title: '菜单管理', name: 'menu-mnt', icon: 'search', component: () => import('@/views/tables/searchable-table.vue') },
             { path: 'exportableTable', title: '表格导出数据', name: 'exportable-table', icon: 'code-download', component: () => import('@/views/tables/exportable-table.vue') },
             { path: 'table2image', title: '表格转图片', name: 'table-to-image', icon: 'images', component: () => import('@/views/tables/table-to-image.vue') }
