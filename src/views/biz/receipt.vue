@@ -16,7 +16,8 @@
                         <can-edit-table refs="table2" v-model="editInlineData"
                                         :columns-list="editInlineColumns"></can-edit-table>
                     </div>
-                    <div style="margin: 10px;overflow: hidden">
+                    <!-- 分页 -->
+                    <div  class="page">
                         <div style="float: right;">
                             <Page :total="100" :current="1" @on-change="changePage"></Page>
                         </div>
