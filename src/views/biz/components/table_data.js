@@ -9,7 +9,7 @@ export const table1Columns = [
         title: '姓名',
         align: 'center',
         key: 'name',
-        editable: true
+        editable: true 
     },
     {
         title: '性别',
