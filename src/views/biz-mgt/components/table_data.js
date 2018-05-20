@@ -236,6 +236,124 @@ export const showCurrentColumns = [
     }
 ];
 
+export const  receptColumns = [
+    {
+        title: 'id',
+        width: 50,
+        align: 'center',
+        key : 'id'
+    },
+    {
+        title: '买方',
+        width: 120,
+        align: 'center',
+        key : 'name'
+    },
+    {
+        title: '购买方银行账户',
+        width: 210,
+        align: 'center',
+        key : 'account'
+    },
+    {
+        title: '购买方地址',
+        width: 220,
+        align: 'center',
+        key : 'address'
+    },
+    {
+        title: '总金额',
+        width: 80,
+        align: 'center',
+        key : 'amount'
+    },
+    // {
+    //     title: 'checkcode',
+    //     type: 'index',
+    //     width: 80,
+    //     align: 'center',
+    //     key : 'checkCode'
+    // },
+    // {
+    //     title: 'invoceCode',
+    //     width: 80,
+    //     align: 'center',
+    //     key : 'invoiceCode'
+    // },
+    // {
+    //     title: 'invoiceData',
+    //     width: 80,
+    //     align: 'center',
+    //     key : 'invoiceData'
+    // },
+    // {
+    //     title: 'invoiceNo',
+    //     type: 'index',
+    //     width: 80,
+    //     align: 'center',
+    //     key : 'invoiceNo'
+    // },
+    // {
+    //     title: '公司名称',
+    //     type: 'index',
+    //     width: 80,
+    //     align: 'center',
+    //     key : 'name'
+    // },
+   
+    {
+        title: '销售方',
+        width: 120,
+        align: 'center',
+        key : 'sellerName'
+    },
+     {
+        title: '备注',
+        width: 80,
+        align: 'center',
+        key : 'remark'
+    },
+    // {
+    //     title: '状态',
+    //     type: 'index',
+    //     width: 80,
+    //     align: 'center',
+    //     key : 'status'
+    // },
+    // {
+    //     title: 'taxpayerCode',
+    //     type: 'index',
+    //     width: 80,
+    //     align: 'center',
+    //     key : 'taxpayerCode'
+    // },
+    {
+        title: '操作',
+        align: 'center',
+        width: 180,
+        key: 'handle',
+        handle: ['edit','delete']
+    },
+];
+
+export const receptData  = [
+   { 
+        id : 'aa',
+        account : 'aa',
+        address : 'aa',
+        // amount : 'a',
+        // checkCode : 'a',
+        // invoiceCode : 'a',
+        // invoiceData : 'a',
+        // invoiceNo  :  'a',
+        // name        : 'a',
+        // remark      : 'a',
+        // sellerName  : 'a',
+        // status      : 'a',
+        // taxpayerCode: 'a', 
+    }
+]
+
 const tableData = {
     table1Columns: table1Columns,
     table1Data: table1Data,
@@ -245,7 +363,9 @@ const tableData = {
     editIncellData: editIncellData,
     editInlineAndCellColumn: editInlineAndCellColumn,
     editInlineAndCellData: editInlineAndCellData,
-    showCurrentColumns: showCurrentColumns
+    showCurrentColumns: showCurrentColumns,
+    receptColumns : receptColumns,    
+    receptData : receptData
 };
 
 export default tableData;

@@ -71,11 +71,13 @@
 
                     let result = resp.data.result;
                     let content = result.content;
+                    console.log(content);
                     this.totalPage = result.totalElements;
                     // this.$Message.success(JSON.stringify(content));
                     this.userData = content;
                 }).catch(error => {
                     this.$Message.error(error.message);
+                   
                 });
             },
             handleNetConnect (state) {

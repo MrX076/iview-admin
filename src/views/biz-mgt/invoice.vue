@@ -13,7 +13,7 @@
                         可编辑单元行
                     </p>
                     <div class="edittable-table-height-con">
-                        <can-edit-table refs="table2" v-model="userData" :columns-list="userColumns"></can-edit-table>
+                        <can-edit-table refs="table2" v-model="userData" :columns-list="table1Columns"></can-edit-table>
                     </div>
                     <div class="page">
                         <div style="float: right;">
