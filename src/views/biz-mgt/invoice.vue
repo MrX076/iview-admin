@@ -57,8 +57,8 @@
                          
                 this.invoiceColumns = tableData.invoiceColumns;
                 let token = Cookies.get('token');
-                console.log(token);
-                this.$Message.success(token);
+                // console.log(token);
+                // this.$Message.success(token);
                 let reqPage = this.page - 1;
                 console.log('requestt page:' + reqPage);
                 this.axios({
@@ -69,7 +69,7 @@
                    
                     let result = resp.data.result;
                     let content = result.content; 
-                    console.log(content)
+                    // console.log(content)
                     this.totalPage = result.totalElements;
                     // this.$Message.success(JSON.stringify(content));
                     this.invoiceData = content;

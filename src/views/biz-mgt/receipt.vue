@@ -73,8 +73,8 @@ export default {
             this.receptsColumns = tableData.receptsColumns;
            
                 let token = Cookies.get('token');
-                console.log(token);
-                this.$Message.success(token);
+                // console.log(token);
+                // this.$Message.success(token);
                 let reqPage = this.page - 1;
                 // console.log('request page:' + reqPage);
                 this.axios({
@@ -85,7 +85,7 @@ export default {
                    
                     let result = resp.data.result;
                     let content = result.content; 
-                    console.log(content)
+                    // console.log(content)
                     this.totalPage = result.totalElements;
                     // this.$Message.success(JSON.stringify(content));
                     this.receptData = content;

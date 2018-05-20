@@ -9,6 +9,7 @@
 </template> 
 
 <script>
+import axios from 'axios';
 const editButton = (vm, h, currentRow, index) => {
     return h('Button', {
         props: {
@@ -47,12 +48,35 @@ const deleteButton = (vm, h, currentRow, index) => {
     return h('Poptip', {
         props: {
             confirm: true,
-            title: '您确定要删除这条数据吗?',
+            title: '您确定要删除吗?',
             transfer: true
         },
         on: {
             'on-ok': () => {
+                //删除此行
+                console.log(vm.thisTableData[index].id);
+                let id = vm.thisTableData[index].id;
+               
                 vm.thisTableData.splice(index, 1);
+                //删除数据库数据
+                axios({
+                    method: 'delete',
+                    url: 'api/invoice/invoice?id='+id,                   
+                }).then(resp =>{
+                    console.log(resp);
+                })
+                //删除方法数据二
+                // let id = vm.thisTableData[index].id;
+                // let url ='api/invoice/invoice?id='+id;
+                // let params = vm.thisTableData[index];
+                //  axios.delete(url,params)
+                //     .then(res => {
+                //         resolve(res.data)
+                //     },err => {
+                //          console.log(err)
+                //     }).catch(err => {
+                //          console.log(err)
+                //     })
                 vm.$emit('input', vm.handleBackdata(vm.thisTableData));
                 vm.$emit('on-delete', vm.handleBackdata(vm.thisTableData), index);
             }
