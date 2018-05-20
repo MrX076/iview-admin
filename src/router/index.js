@@ -52,7 +52,7 @@ router.beforeEach((to, from, next) => {
             });
         } else {
             const curRouterObj = Util.getRouterObjByName([otherRouter, ...appRouter], to.name);
-            if (curRouterObj && curRouterObj.access !== undefined) { // 需要判断权限的路由
+            if (curRouterObj && curRouterObj.access !== undefined && curRouterObj.access.length > 0) { // 需要判断权限的路由
                 let auths = JSON.parse(Cookies.get('user'))['authorities'];
                 console.log('router authorities:' + JSON.stringify(auths));
                 let hasAuth = false;
