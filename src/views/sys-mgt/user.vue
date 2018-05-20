@@ -67,8 +67,6 @@
                     method: 'get',
                     url: '/api/invoice/user/list?page=' + reqPage + '&limit=' + this.limit
                 }).then(resp => {
-                    // 跳转到主页面
-
                     let result = resp.data.result;
                     let content = result.content;
                     console.log(content);
@@ -77,7 +75,6 @@
                     this.userData = content;
                 }).catch(error => {
                     this.$Message.error(error.message);
-                   
                 });
             },
             handleNetConnect (state) {
