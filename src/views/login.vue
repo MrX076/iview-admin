@@ -95,7 +95,7 @@
                                 method: 'get',
                                 url: '/api/auth/oauth/check_token?token=' + token,
                                 headers: {
-                                    'Authorization': 'Basic YWNtZTphY21lc2VjcmV0'
+                                    'Authorization': 'Basic YWNtZTphY21lc2VjcmV0'// 需要http basic验证
                                 }
                             }).then(tokenResp => {
                                 Cookies.set('user', tokenResp.data);
