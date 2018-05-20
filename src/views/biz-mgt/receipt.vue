@@ -58,8 +58,9 @@ export default {
             // editInlineAndCellData: [],
             // showCurrentColumns: [],
             showCurrenttableData: false,
-            limit:8,
-            page:2,
+            page: 1,
+            limit: 8,
+            totalPage: 0
         };
     },
     methods: {

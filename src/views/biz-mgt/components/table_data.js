@@ -343,6 +343,18 @@ export const  receptsColumns = [
         align: 'center',
         key : 'id'
     },
+    {
+        title: 'name',
+        width: 100,
+        align: 'center',
+        key : 'name'
+    },
+    {
+        title: 'remark',
+        width: 100,
+        align: 'center',
+        key : 'remark'
+    },
 ]
 
 
@@ -356,7 +368,8 @@ const tableData = {
     editInlineAndCellColumn: editInlineAndCellColumn,
     editInlineAndCellData: editInlineAndCellData,
     showCurrentColumns: showCurrentColumns,
-    invoiceColumns : invoiceColumns,    
+    invoiceColumns : invoiceColumns,  
+    receptsColumns : receptsColumns,  
 };
 
 export default tableData;
