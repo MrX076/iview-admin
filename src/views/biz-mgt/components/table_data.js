@@ -236,10 +236,10 @@ export const showCurrentColumns = [
     }
 ];
 
-export const  receptColumns = [
+export const  invoiceColumns = [
     {
         title: 'id',
-        width: 50,
+        width: 70,
         align: 'center',
         key : 'id'
     },
@@ -257,7 +257,7 @@ export const  receptColumns = [
     },
     {
         title: '购买方地址',
-        width: 220,
+        width: 230,
         align: 'center',
         key : 'address'
     },
@@ -336,23 +336,15 @@ export const  receptColumns = [
     },
 ];
 
-export const receptData  = [
-   { 
-        id : 'aa',
-        account : 'aa',
-        address : 'aa',
-        // amount : 'a',
-        // checkCode : 'a',
-        // invoiceCode : 'a',
-        // invoiceData : 'a',
-        // invoiceNo  :  'a',
-        // name        : 'a',
-        // remark      : 'a',
-        // sellerName  : 'a',
-        // status      : 'a',
-        // taxpayerCode: 'a', 
-    }
+export const  receptsColumns = [
+    {
+        title: 'id',
+        width: 70,
+        align: 'center',
+        key : 'id'
+    },
 ]
+
 
 const tableData = {
     table1Columns: table1Columns,
@@ -364,8 +356,7 @@ const tableData = {
     editInlineAndCellColumn: editInlineAndCellColumn,
     editInlineAndCellData: editInlineAndCellData,
     showCurrentColumns: showCurrentColumns,
-    receptColumns : receptColumns,    
-    receptData : receptData
+    invoiceColumns : invoiceColumns,    
 };
 
 export default tableData;

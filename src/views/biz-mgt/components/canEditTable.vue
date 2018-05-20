@@ -4,9 +4,9 @@
 
 <template>
     <div>
-        <Table highlight-row :ref="refs" :columns="columnsList" :data="thisTableData" border disabled-hover></Table>
+        <Table highlight-row :ref="refs" :columns="columnsList" :data="thisTableData" border disabled-hover ></Table>
     </div>
-</template>
+</template> 
 
 <script>
 const editButton = (vm, h, currentRow, index) => {
@@ -134,6 +134,15 @@ const cellInput = (vm, h, param, item) => {
         }
     });
 };
+const Todetail = (h) =>{
+    return h('tr',{
+        on:{
+            'click' (event){
+                console.log(234);
+            }
+        }
+    })
+}
 export default {
     name: 'canEditTable',
     props: {
@@ -270,7 +279,10 @@ export default {
                 delete item.saving;
             });
             return clonedData;
-        }
+        },
+        // Todetail(){
+        //     console.log("qwedas");
+        // }
     },
     watch: {
         value (data) {
