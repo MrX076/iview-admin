@@ -121,7 +121,6 @@ export const appRouter = [
         children: [
             { path: 'invoiceMnt', title: '发票管理', name: 'invoice-mnt', icon: 'arrow-move', component: () => import('@/views/biz-mgt/invoice.vue') },
             { path: 'receiptMnt', title: '报销单管理', name: 'receipt-mnt', icon: 'edit', component: () => import('@/views/biz-mgt/receipt.vue') },
-            // { path: 'detail', title: '发票详情', name: 'detail', icon: 'edit', component: () => import('@/views/biz-mgt/detail.vue') },
             { path: 'examineMnt', title: '审核', name: 'examine-mnt', icon: 'search', component: () => import('@/views/tables/searchable-table.vue') },
             { path: 'exportableTable', title: '表格导出数据', name: 'exportable-table', icon: 'code-download', component: () => import('@/views/tables/exportable-table.vue') },
             { path: 'table2image', title: '表格转图片', name: 'table-to-image', icon: 'images', component: () => import('@/views/tables/table-to-image.vue') }
