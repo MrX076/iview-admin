@@ -80,7 +80,7 @@ export const userColumns = [
         align: 'center',
         width: 120,
         key: 'handle',
-        handle: ['delete']
+        handle: ['save','delete']
     }
 ];
 
