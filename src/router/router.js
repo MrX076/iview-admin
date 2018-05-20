@@ -82,7 +82,7 @@ export const appRouter = [
         icon: 'lock-combination',
         title: '权限测试页',
         name: 'accesstest',
-        access: ['ROLE_ADMIN'],
+        access: 'ROLE_ADMIN',
         component: Main,
         children: [
             { path: 'index', title: '权限测试页', name: 'accesstest_index', access: 'ROLE_ADMIN', component: () => import('@/views/access/access-test.vue') }

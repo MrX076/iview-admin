@@ -3,9 +3,7 @@ import env from '../../build/env';
 import semver from 'semver';
 import packjson from '../../package.json';
 
-let util = {
-
-};
+let util = {};
 util.title = function (title) {
     title = title || 'iView admin';
     window.document.title = title;
@@ -264,6 +262,22 @@ util.checkUpdate = function (vm) {
             });
         }
     });
+};
+
+util.setRouterProps = function (routers, props) {
+    for (let routeItem of routers) {
+        for (let prop of props) {
+            if (prop.name === routeItem.name) {
+                routeItem.access = prop.access;
+                routeItem.icon = prop.icon;
+                routeItem.title = prop.title;
+                break;
+            }
+        }
+        if (routeItem.children) {
+            util.setRouterProps(routeItem.children, props);
+        }
+    }
 };
 
 export default util;

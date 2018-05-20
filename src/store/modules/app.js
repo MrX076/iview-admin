@@ -44,7 +44,7 @@ const app = {
             console.log('user info:' + Cookies.get('user'));
             console.log('check user auths update menu:' + auths);
             appRouter.forEach((item, index) => {
-                if (item.access !== undefined) {
+                if (item.access !== undefined && item.access.length > 0) {
                     for (let accessCode of auths) {
                         if (Util.showThisRoute(item.access, accessCode)) {
                             if (item.children.length === 1) {
@@ -53,7 +53,7 @@ const app = {
                                 let len = menuList.push(item);
                                 let childrenArr = [];
                                 childrenArr = item.children.filter(child => {
-                                    if (child.access !== undefined) {
+                                    if (child.access !== undefined && child.access.length > 0) {
                                         if (child.access === accessCode) {
                                             return child;
                                         }
@@ -69,23 +69,25 @@ const app = {
                     if (item.children.length === 1) {
                         menuList.push(item);
                     } else {
-                        let len = menuList.push(item);
-                        let childrenArr = [];
-                        childrenArr = item.children.filter(child => {
-                            if (child.access !== undefined) {
-                                if (Util.showThisRoute(child.access, accessCode)) {
+                        for (let accessCode of auths) {
+                            let len = menuList.push(item);
+                            let childrenArr = [];
+                            childrenArr = item.children.filter(child => {
+                                if (child.access !== undefined && child.access.length > 0) {
+                                    if (Util.showThisRoute(child.access, accessCode)) {
+                                        return child;
+                                    }
+                                } else {
                                     return child;
                                 }
+                            });
+                            if (childrenArr === undefined || childrenArr.length === 0) {
+                                menuList.splice(len - 1, 1);
                             } else {
-                                return child;
+                                let handledItem = JSON.parse(JSON.stringify(menuList[len - 1]));
+                                handledItem.children = childrenArr;
+                                menuList.splice(len - 1, 1, handledItem);
                             }
-                        });
-                        if (childrenArr === undefined || childrenArr.length === 0) {
-                            menuList.splice(len - 1, 1);
-                        } else {
-                            let handledItem = JSON.parse(JSON.stringify(menuList[len - 1]));
-                            handledItem.children = childrenArr;
-                            menuList.splice(len - 1, 1, handledItem);
                         }
                     }
                 }

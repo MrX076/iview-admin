@@ -42,6 +42,8 @@
 
 <script>
     import Cookies from 'js-cookie';
+    import {appRouter} from '../router/router';
+    import util from '@/libs/util.js';
 
     export default {
         data () {
@@ -107,6 +109,20 @@
                                 this.$Message.success('check user info success：' + JSON.stringify(tokenResp.data));
                             }).catch(error => {
                                 this.$Message.error(error.message);
+                            });
+
+                            // 获取菜单列表
+                            this.axios({
+                                method: 'get',
+                                url: '/api/invoice/menu/menuRole'
+                            }).then(menuResp => {
+                                // 刷新router
+                                let data = menuResp.data.result;
+                                // console.log('before menu set:' + JSON.stringify(appRouter));
+                                util.setRouterProps(appRouter, data);
+                                // console.log('after menu set:' + JSON.stringify(appRouter));
+                            }).catch(error => {
+                                this.$Message.error('获取菜单列表失败:' + error.message);
                             });
                         }).catch(error => {
                             this.$Message.error(error.message);
