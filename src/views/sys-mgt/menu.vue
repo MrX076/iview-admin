@@ -1,6 +1,14 @@
 <style lang="less">
     @import '../../styles/common.less';
     @import './components/table.less';
+
+    .ivu-tree-children {
+        font-size: 24px !important;
+    }
+
+    .ivu-card-body {
+        min-height: 550px;
+    }
 </style>
 
 <template>
@@ -10,26 +18,21 @@
                 <Card>
                     <p slot="title">
                         <Icon type="android-remove"></Icon>
-                        可编辑单元行
+                        菜单管理
                     </p>
                     <div class="edittable-table-height-con">
-                        <can-edit-table refs="table2" v-model="userData" :columns-list="userColumns"></can-edit-table>
-                    </div>
-                    <div class="page">
-                        <div style="float: right;">
-                            <Page :total="100" :current="1" @on-change="changePage"></Page>
-                        </div>
+                        <Tree :data="treeData" :render="renderContent"></Tree>
                     </div>
                 </Card>
             </Col>
-            <Col span="12" class="padding-left-10">
+            <Col span="12">
                 <Card>
                     <p slot="title">
-                        <Icon type="android-more-horizontal"></Icon>
-                        可编辑单元格(鼠标移入显示编辑单元格按钮)
+                        <Icon type="android-remove"></Icon>
+                        当前菜单角色
                     </p>
                     <div class="edittable-table-height-con">
-                        <can-edit-table refs="table3" v-model="editIncellData" :hover-show="true" :edit-incell="true" :columns-list="editIncellColumns"></can-edit-table>
+                        <Tree :data="treeData" :render="renderContent"></Tree>
                     </div>
                 </Card>
             </Col>
@@ -38,60 +41,135 @@
 </template>
 
 <script>
-import canEditTable from './components/canEditTable.vue';
-import tableData from './components/table_data.js';
-export default {
-    name: 'editable-table',
-    components: {
-        canEditTable
-    },
-    data () {
-        return {
-            columnsList: [],
-            tableData: [],
-            userColumns: [],
-            userData: [],
-            editIncellColumns: [],
-            editIncellData: [],
-            editInlineAndCellColumn: [],
-            editInlineAndCellData: [],
-            showCurrentColumns: [],
-            showCurrentTableData: false
-        };
-    },
-    methods: {
-        getData () {
-            this.columnsList = tableData.table1Columns;
-            this.tableData = tableData.table1Data;
-            this.editInlineColumns = tableData.userColumns;
-            this.editInlineData = tableData.userData;
-            this.editIncellColumns = tableData.editIncellColumns;
-            this.editIncellData = tableData.editIncellData;
-            this.editInlineAndCellColumn = tableData.editInlineAndCellColumn;
-            this.editInlineAndCellData = tableData.editInlineAndCellData;
-            this.showCurrentColumns = tableData.showCurrentColumns;
+    export default {
+        data () {
+            return {
+                treeData: [
+                    {
+                        title: '菜单目录',
+                        expand: true,
+                        render: (h, {root, node, data}) => {
+                            return h('span', {
+                                style: {
+                                    display: 'inline-block',
+                                    width: '100%'
+                                }
+                            }, [
+                                h('span', [
+                                    h('Icon', {
+                                        props: {
+                                            type: 'ios-folder-outline'
+                                        },
+                                        style: {
+                                            marginRight: '8px'
+                                        }
+                                    }),
+                                    h('span', data.title)
+                                ])
+                            ]);
+                        },
+                        children: [
+                            {
+                                title: 'child 1-1',
+                                remark: 'child 1-1 remark',
+                                expand: true,
+                                children: [
+                                    {
+                                        title: 'leaf 1-1-1',
+                                        expand: true
+                                    },
+                                    {
+                                        title: 'leaf 1-1-2',
+                                        expand: true
+                                    }
+                                ]
+                            },
+                            {
+                                title: 'child 1-2',
+                                expand: true,
+                                children: [
+                                    {
+                                        title: 'leaf 1-2-1',
+                                        expand: true
+                                    },
+                                    {
+                                        title: 'leaf 1-2-1',
+                                        expand: true
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                buttonProps: {
+                    type: 'ghost',
+                    size: 'small'
+                }
+            };
         },
-        handleNetConnect (state) {
-            this.breakConnect = state;
+        methods: {
+            renderContent (h, {root, node, data}) {
+                return h('span', {
+                    style: {
+                        display: 'inline-block',
+                        width: '100%'
+                    },
+                    on: {
+                        click: () => {
+                            this.getRoles(data);
+                        }
+                    }
+                }, [
+                    h('span', [
+                        h('Icon', {
+                            props: {
+                                type: 'ios-paper-outline'
+                            },
+                            style: {
+                                marginRight: '8px'
+                            }
+                        }),
+                        h('span', data.title),
+                        h('span', {
+                            style: {
+                                marginLeft: '16px',
+                                fontSize: '16px',
+                                color: 'gray'
+                            }
+                        }, data.remark)
+                    ])
+                ]);
+            },
+            getRoles (data) {},
+            getData () {
+                this.axios({
+                    method: 'get',
+                    url: '/api/invoice//menu/menuTree'
+                }).then(resp => {
+                    let reqData = resp.data.result;
+                    console.log('treeData:' + this.treeData[0].children);
+                    this.treeData[0].children = reqData;
+                }).catch(error => {
+                    this.$Message.error(error.message);
+                });
+            },
+            append (data) {
+                const children = data.children || [];
+                children.push({
+                    title: 'appended node',
+                    expand: true
+                });
+                this.$set(data, 'children', children);
+            },
+            remove (root, node, data) {
+                const parentKey = root.find(el => el === node).parent;
+                const parent = root.find(el => el.nodeKey === parentKey).node;
+                const index = parent.children.indexOf(data);
+                parent.children.splice(index, 1);
+            }
         },
-        handleLowSpeed (state) {
-            this.lowNetSpeed = state;
-        },
-        getCurrentData () {
-            this.showCurrentTableData = true;
-        },
-        handleDel (val, index) {
-            this.$Message.success('删除了第' + (index + 1) + '行数据');
-        },
-        handleCellChange (val, index, key) {
-            this.$Message.success('修改了第 ' + (index + 1) + ' 行列名为 ' + key + ' 的数据');
-        },
-        handleChange (val, index) {
-            this.$Message.success('修改了第' + (index + 1) + '行数据');
+        created () {
+            this.getData();
         }
-    },
-    created () {
-        this.getData();
-    }
-};
+    };
 </script>

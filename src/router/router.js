@@ -135,7 +135,7 @@ export const appRouter = [
         children: [
             { path: 'userMnt', title: '用户管理', name: 'user-mnt', icon: 'arrow-move', component: () => import('@/views/sys-mgt/user.vue') },
             { path: 'roleMnt', title: '角色管理', name: 'role-mnt', icon: 'edit', component: () => import('@/views/sys-mgt/role.vue') },
-            { path: 'menuMnt', title: '菜单管理', name: 'menu-mnt', icon: 'search', component: () => import('@/views/tables/searchable-table.vue') },
+            { path: 'menuMnt', title: '菜单管理', name: 'menu-mnt', icon: 'search', component: () => import('@/views/sys-mgt/menu.vue') },
             { path: 'exportableTable', title: '表格导出数据', name: 'exportable-table', icon: 'code-download', component: () => import('@/views/tables/exportable-table.vue') },
             { path: 'table2image', title: '表格转图片', name: 'table-to-image', icon: 'images', component: () => import('@/views/tables/table-to-image.vue') }
         ]
