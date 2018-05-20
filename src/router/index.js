@@ -53,11 +53,23 @@ router.beforeEach((to, from, next) => {
         } else {
             const curRouterObj = Util.getRouterObjByName([otherRouter, ...appRouter], to.name);
             if (curRouterObj && curRouterObj.access !== undefined) { // 需要判断权限的路由
-                let auths = Cookies.get('user')['authorities'];
+                let auths = JSON.parse(Cookies.get('user'))['authorities'];
+                console.log('router authorities:' + JSON.stringify(auths));
                 let hasAuth = false;
-                for (let i = 0; i < auths.length; i++) {
-                    if (curRouterObj.access === auths[i]) {
-                        hasAuth = true;
+                console.log('check user auths');
+                for (let item of auths) {
+                    console.log('check auth:' + item);
+                    let curAccess = curRouterObj.access;
+                    if (typeof curAccess === 'object' && Array.isArray(curAccess)) {
+                        if (curAccess.indexOf(item) >= 0) {
+                            hasAuth = true;
+                            break;
+                        }
+                    } else {
+                        if (curAccess === item) {
+                            hasAuth = true;
+                            break;
+                        }
                     }
                 }
                 if (hasAuth) {
