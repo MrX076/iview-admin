@@ -4,11 +4,14 @@
 
 <template>
     <div>
-        <Table highlight-row :ref="refs" :columns="columnsList" :data="thisTableData" border disabled-hover ></Table>
+        <!-- //  @on-current-change="recordCue()" -->
+        <Table highlight-row :ref="refs" :columns="columnsList" :data="thisTableData" border disabled-hover   @on-current-change="clickRow()"></Table>
     </div>
-</template> 
+</template>
+
 
 <script>
+import tableData from './table_data.js';
 import axios from 'axios';
 const editButton = (vm, h, currentRow, index) => {
     return h('Button', {
@@ -104,7 +107,7 @@ const deleteButton = (vm, h, currentRow, index) => {
 };
 const detailButton = (vm, h, currentRow, index) => {
  
-    return[
+  return  [
         h('Button', {
             style: {
                 margin: '0 5px'
@@ -112,6 +115,17 @@ const detailButton = (vm, h, currentRow, index) => {
             props: {
                 type: 'info',
                 placement: 'top'
+            },
+            on : {
+                'click': (event)=>{
+                    // let ro = vm.thisTableData;
+                    console.log(vm._props.roleModel);
+                     this.$emit("changeRo",!vm._props.roleModel)
+                    
+                    // console.log(h);
+                    return vm._props.roleModel = !vm._props.roleModel;
+
+                }
             }
         }, '详情')
     ]
@@ -195,6 +209,7 @@ const Todetail = (h) =>{
 export default {
     name: 'canEditTable',
     props: {
+        currow:String,
         refs: String,
         columnsList: Array,
         value: Array,
@@ -206,13 +221,18 @@ export default {
         hoverShow: {
             type: Boolean,
             default: false
-        }
+        },
+        roleModel:{
+            type:Boolean,
+            default:false
+        },
     },
     data () {
         return {
             columns: [],
             thisTableData: [],
-            edittingStore: []
+            edittingStore: [],
+            currow:''
         };
     },
     created () {
@@ -338,6 +358,14 @@ export default {
             });
             return clonedData;
         },
+        // recordCue(cur,old){
+        //     console.log('cur row change :'+cur);
+        //     this.currow=cur;
+        // },
+        clickRow(){
+           
+            console.log(this);
+        }
         // Todetail(){
         //     console.log("qwedas");
         // }

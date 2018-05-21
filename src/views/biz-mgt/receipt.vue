@@ -17,7 +17,7 @@
                     </div>
                     <div class="page">
                         <div style="float: right;">
-                            <Page :total="100" :current="1" @on-change="changePage"></Page>
+                            <Page :total="2" :current="1" @on-change="changePage"></Page>
                         </div>
                     </div>
                 </Card>

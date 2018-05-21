@@ -247,13 +247,17 @@ export const  invoiceColumns = [
         title: '买方',
         width: 120,
         align: 'center',
-        key : 'name'
+        key : 'name',
+        editable: true        
+        
     },
     {
         title: '购买方银行账户',
         width: 188,
         align: 'center',
-        key : 'account'
+        key : 'account',
+        editable: true        
+        
     },
     {
         title: '购买方地址',
@@ -307,7 +311,9 @@ export const  invoiceColumns = [
         title: '销售方',
         width: 120,
         align: 'center',
-        key : 'sellerName'
+        key : 'sellerName',
+        editable: true        
+        
     },
      {
         title: '备注',
@@ -350,7 +356,9 @@ export const  receptsColumns = [
         title: 'name',
         width: 100,
         align: 'center',
-        key : 'name'
+        key : 'name',
+        editable: true        
+        
     },
     {
         title: 'remark',
@@ -373,7 +381,7 @@ const tableData = {
     editInlineAndCellData: editInlineAndCellData,
     showCurrentColumns: showCurrentColumns,
     invoiceColumns : invoiceColumns,  
-    receptsColumns : receptsColumns,  
+    receptsColumns : receptsColumns, 
 };
 
 export default tableData;
