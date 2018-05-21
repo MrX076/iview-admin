@@ -17,7 +17,7 @@ const editButton = (vm, h, currentRow, index) => {
             loading: currentRow.saving
         },
         style: {
-            margin: '0 5px'
+            margin: '0 5px',
         },
         on: {
             'click': () => {

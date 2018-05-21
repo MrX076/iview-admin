@@ -334,7 +334,7 @@ export const  invoiceColumns = [
         title: '操作',
         align: 'center',
         width: 180,
-        key: 'handle',
+        key: 'handle', 
         handle: ['edit','delete','detail']
     },
 ];
