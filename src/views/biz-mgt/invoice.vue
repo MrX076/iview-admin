@@ -13,27 +13,58 @@
                         <Icon type="information-circled"></Icon>
                         <span>新增发票</span>
                     </p>
-                    <form class="addForm" style="line-height:32px;">                       
+                    <form class="addForm" id="addForm" >                       
                         <div>
-                            <span>买方：</span><input type="text" placeholder="请输入买方名称">
+                            <span>买方：</span><input type="text" placeholder="请输入买方名称" name="sell" value="">
                         </div>
+
                         <div>
-                            <span>银行账号：</span><input type="text" placeholder="请输入银行账号">
+                            <span>银行账号：</span><input type="text" placeholder="请输入银行账号" value="">
                         </div>
+
                         <div>
-                            <span>地址：</span><input type="text" placeholder="请输入地址">
+                            <span>地址：</span><input type="text" placeholder="请输入地址" value="">
                         </div>
+
                         <div>
-                            <span>金额：</span><input type="text" placeholder="请输入金额">
+                            <span>金额：</span><input type="text" placeholder="请输入金额" value="">
                         </div>
+
                         <div>
-                            <span>销售方：</span><input type="text" placeholder="请输入销售方">
+                            <span>销售方：</span><input type="text" placeholder="请输入销售方" value="">
                         </div>
+
                         <div>
-                            <span>备注：</span><input type="text" placeholder="请输入备注">
+                            <span>销售方纳税识别号：</span><input type="text" placeholder="请输入销售方" value="">
                         </div>
+
                         <div>
-                            <button class="btn ivu-btn-success">提交</button>
+                            <span>校验码:</span><input type="text" placeholder="请输入校验码" value="" >
+                        </div>
+
+                        <div>
+                            <span>发票代码：</span><input type="text" placeholder="请输入发票代码" value="">
+                        </div>
+
+                        <div>
+                            <span>开票日期：</span><input type="date" placeholder="请输入开票日期" value="">
+                        </div>
+
+                        <div>
+                            <span>发票号：</span><input type="text" placeholder="请输入发票号" value="">
+                        </div>
+
+                        
+                        <div>
+                            <span>taxpayerCode ：</span><input type="text" placeholder="请输入taxpayerCode " value="">
+                        </div>
+
+                        <div>
+                            <span>备注：</span><input type="text" placeholder="请输入备注" value="">
+                        </div>
+                         
+                        <div>
+                            <button class="btn ivu-btn-success" @click="addMsg()">提交</button>
                         </div>
                     </form>
                    
@@ -56,7 +87,7 @@
                     <!-- 分页 -->
                      <div class="page">
                         <div style="float: right;">
-                            <Page :total="totalPage" :current="page" @on-change="changePage"></Page>
+                            <Page :total="total" :current="page" @on-change="changePage"></Page>
                         </div>
                     </div>
                 </Card>
@@ -70,6 +101,7 @@
     import canEditTable from './components/canEditTable.vue';
     import tableData from './components/table_data.js';
     import Cookies from 'js-cookie';
+    import axios from 'axios';
     export default {
         name: 'editable-table',
         components: {
@@ -84,8 +116,9 @@
                 invoiceData: [],
                 page: 1,
                 limit: 8,
-                roleModel: '',
-                totalPage: 0,
+                roleModel: false,
+                total: 0,
+                newData:[],
             };
            
         },
@@ -102,8 +135,8 @@
                 let token = Cookies.get('token');
                 // console.log(token);
                 // this.$Message.success(token);
-                let reqPage = this.page - 1;
-                console.log('requestt page:' + reqPage);
+                let reqPage = this.page -1;
+                // console.log('requestt page:' + reqPage);
                 //获取订单列表数据
                 this.axios({
                     method: 'get',
@@ -113,8 +146,13 @@
                    
                     let result = resp.data.result;
                     let content = result.content; 
-                    // console.log(content)
-                    this.totalPage = result.totalElements;
+                    // console.log(result.totalElements)
+                    if(result.totalElements/this.limit==0){
+                        this.total = result.totalElements;
+                    }
+                    else{
+                        this.total = result.totalElements+this.limit;
+                    }                  
                     this.invoiceData = content;
                 }).catch(error => {
                     this.$Message.error(error.message);
@@ -124,7 +162,53 @@
            
             changeRo(){
                 this.roleModel = !this.roleModel;
+            },
+            addMsg(){
+               
+                let form = document.getElementById('addForm');
+                let div = form.children;
+                
+                for(let i=0;i<div.length-1;i++){
+                    this.newData.push(div[i].children[1])
+                    console.log(this.newData[i].value)
+                } 
+                
+                console.log(this.newData)
 
+                let newdata={
+                    account:this.newData[0].value,
+                    address: this.newData[1].value,
+                    amount: this.newData[2].value,
+                    checkCode : this.newData[3].value,
+                    invoiceCode : this.newData[4].value,
+                    invoiceNo : this.newData[5].value,
+                    invoiceDate : this.newData[6].value,
+                    name : this.newData[7].value,
+                    remark : this.newData[8].value,
+                    sellerCode : this.newData[9].value,
+                    sellerName : this.newData[10].value,
+                    taxpayerCode : this.newData[11].value,
+                }
+                console.log(JSON.stringify(newdata));
+                console.log(newdata)
+                setTimeout(() => {
+                    alert(123)
+                }, 3000);
+                // alert(newdata);
+               
+
+                
+                // console.log(data);
+                    axios.post('api/invoice/invoice',JSON.stringify(newdata),{
+                             headers: {
+                            'Content-Type': 'application/json'
+                      }
+                    })
+                    .then(res => {
+                        this.$Message.success("成功添加");
+                    })
+
+                                    
             }
             
 

@@ -41,8 +41,8 @@ const app = {
             let auths = JSON.parse(Cookies.get('user'))['authorities'];
             // let accessCode = Cookies.get('access');
             let menuList = [];
-            console.log('user info:' + Cookies.get('user'));
-            console.log('check user auths update menu:' + auths);
+            // console.log('user info:' + Cookies.get('user'));
+            // console.log('check user auths update menu:' + auths);
             appRouter.forEach((item, index) => {
                 if (item.access !== undefined && item.access.length > 0) {
                     for (let accessCode of auths) {

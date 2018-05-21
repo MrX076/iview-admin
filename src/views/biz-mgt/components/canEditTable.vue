@@ -45,7 +45,7 @@ const editButton = (vm, h, currentRow, index) => {
                     vm.$emit('on-change', vm.handleBackdata(vm.thisTableData), index);
                     
                     //修改数据
-                   
+                //    console.log(vm.thisTableData[index]);
                      axios.put('api/invoice/invoice' ,vm.thisTableData[index])
                     .then(res => {
                         this.$Message.success(res.data);
@@ -209,7 +209,7 @@ const Todetail = (h) =>{
 export default {
     name: 'canEditTable',
     props: {
-        currow:String,
+        // currow:String,
         refs: String,
         columnsList: Array,
         value: Array,
@@ -232,7 +232,7 @@ export default {
             columns: [],
             thisTableData: [],
             edittingStore: [],
-            currow:''
+            // currow:''
         };
     },
     created () {
