@@ -84,7 +84,7 @@
                         }).then(resp => {
                             this.$Loading.finish();
                             let token = resp.data['access_token'];
-                            // store把token存到本地
+                            // store把token存到本地 issue：store里面的token会丢失
                             // this.$store.commit(types.LOGIN, token);
                             // console.log('store token ');
                             // console.log(this.$store);
@@ -119,7 +119,7 @@
                                 // 刷新router
                                 let data = menuResp.data.result;
                                 // console.log('before menu set:' + JSON.stringify(appRouter));
-                                util.setRouterProps(appRouter, data);
+                                // util.setRouterProps(appRouter, data);
                                 // console.log('after menu set:' + JSON.stringify(appRouter));
                             }).catch(error => {
                                 this.$Message.error('获取菜单列表失败:' + error.message);

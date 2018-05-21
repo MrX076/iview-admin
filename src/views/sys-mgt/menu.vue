@@ -1,4 +1,4 @@
-<style lang="less">
+<style lang="less" xmlns="http://www.w3.org/1999/html">
     @import '../../styles/common.less';
     @import './components/table.less';
 
@@ -13,30 +13,57 @@
 
 <template>
     <div>
-        <Row class="margin-top-10">
-            <Col span="12">
-                <Card>
-                    <p slot="title">
-                        <Icon type="android-remove"></Icon>
-                        菜单管理
-                    </p>
-                    <div class="edittable-table-height-con">
-                        <Tree :data="treeData" :render="renderContent"></Tree>
-                    </div>
-                </Card>
-            </Col>
-            <Col span="12">
-                <Card>
-                    <p slot="title">
-                        <Icon type="android-remove"></Icon>
-                        当前菜单角色
-                    </p>
-                    <div class="edittable-table-height-con">
-                        <Tree :data="treeData" :render="renderContent"></Tree>
-                    </div>
-                </Card>
-            </Col>
-        </Row>
+        <Card>
+
+            <Modal v-model="roleModel" width="720">
+                <p slot="header" style="color:#0055aa;text-align:center">
+                    <Icon type="information-circled"></Icon>
+                    <span>设置角色</span>
+                </p>
+                <div style="text-align:center">
+                    <Transfer
+                            :data="allRole"
+                            :target-keys="menuRole"
+                            :list-style="{width: '250px', height: '300px'}"
+                            :render-format="render3"
+                            :titles="['未拥有角色','已拥有角色']"
+                            :operations="['移除','增加']"
+                            @on-change="roleChange"></Transfer>
+                </div>
+                <div slot="footer">
+                    <Button type="info" size="large" long :loading="modal_loading" @click="del">确定</Button>
+                </div>
+            </Modal>
+            <Row class="margin-top-10">
+                <Col span="24">
+                    <Card>
+                        <p slot="title">
+                            <Icon type="android-remove"></Icon>
+                            菜单管理
+                        </p>
+                        <div class="edittable-table-height-con">
+                            <Tree :data="treeData" :render="renderContent"></Tree>
+                        </div>
+                    </Card>
+                </Col>
+                <!--<Col span="12" class="padding-left-10">
+                    <Card dis-hover>
+                        <p slot="title">
+                            <Icon type="ios-list"></Icon>
+                            菜单角色
+                        </p>
+                        <div style="height: 360px;">
+                            <ul id="todoList" class="iview-admin-draggable-list">
+                                <li v-for="(item, index) in todoArray" :key="index"
+                                    class="notwrap todolist-item" :data-index="index">
+                                    {{ item.content }}
+                                </li>
+                            </ul>
+                        </div>
+                    </Card>
+                </Col>-->
+            </Row>
+        </Card>
     </div>
 </template>
 
@@ -44,6 +71,20 @@
     export default {
         data () {
             return {
+                roleModel: false,
+                allRole: [
+                    {
+                        label: 'Content all',
+                        description: 'The desc of content  all'
+                    }
+                ],
+                menuRole: [
+                    {
+                        label: 'Content menu',
+                        description: 'The desc of content  menu'
+                    }
+                ],
+                menuId: 0,
                 treeData: [
                     {
                         title: '菜单目录',
@@ -116,7 +157,7 @@
                     },
                     on: {
                         click: () => {
-                            this.getRoles(data);
+                            this.getMenuRoles(data);
                         }
                     }
                 }, [
@@ -140,11 +181,40 @@
                     ])
                 ]);
             },
-            getRoles (data) {},
+            getMenuRoles (data) {
+                this.roleModel = true;
+                this.axios({
+                    method: 'get',
+                    url: '/api/invoice/menu/roles?menuId=' + data.id
+                }).then(resp => {
+                    let reqData = resp.data.result;
+                    for (let item of reqData) {
+                        item['key'] = item['id'];
+                        item['label'] = item['name'];
+                        item['description'] = item['remark'];
+                    }
+                    console.log('menuRole:' + JSON.stringify(reqData));
+                    this.menuRole=reqData;
+                }).catch(error => {
+                    this.$Message.error(error.message);
+                });
+            },
+            getAllRole () {
+                this.axios({
+                    method: 'get',
+                    url: '/api/invoice/role/all'
+                }).then(resp => {
+                    let reqData = resp.data.result;
+                    console.log('treeData:' + this.treeData[0].children);
+                    // this.treeData[0].children = reqData;
+                }).catch(error => {
+                    this.$Message.error(error.message);
+                });
+            },
             getData () {
                 this.axios({
                     method: 'get',
-                    url: '/api/invoice//menu/menuTree'
+                    url: '/api/invoice/menu/menuTree'
                 }).then(resp => {
                     let reqData = resp.data.result;
                     console.log('treeData:' + this.treeData[0].children);
@@ -152,6 +222,10 @@
                 }).catch(error => {
                     this.$Message.error(error.message);
                 });
+            },
+            roleChange (newTargetKeys) {
+                // menuRole=newTargetKeys;
+                console.log(newTargetKeys);
             },
             append (data) {
                 const children = data.children || [];
@@ -168,8 +242,10 @@
                 parent.children.splice(index, 1);
             }
         },
+    
         created () {
             this.getData();
+            this.getAllRole();
         }
     };
 </script>
