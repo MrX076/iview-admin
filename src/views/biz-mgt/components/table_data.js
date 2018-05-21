@@ -251,13 +251,13 @@ export const  invoiceColumns = [
     },
     {
         title: '购买方银行账户',
-        width: 210,
+        width: 188,
         align: 'center',
         key : 'account'
     },
     {
         title: '购买方地址',
-        width: 230,
+        width: 200,
         align: 'center',
         key : 'address',
         editable: true        
@@ -333,7 +333,7 @@ export const  invoiceColumns = [
     {
         title: '操作',
         align: 'center',
-        width: 180,
+        width: 236,
         key: 'handle', 
         handle: ['edit','delete','detail']
     },

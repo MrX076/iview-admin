@@ -96,30 +96,25 @@ const deleteButton = (vm, h, currentRow, index) => {
                 margin: '0 5px'
             },
             props: {
-                type: 'primary',
+                type: 'error',
                 placement: 'top'
             }
         }, '删除')
     ]);
 };
 const detailButton = (vm, h, currentRow, index) => {
-    return h('button', {
-         style: {
-                margin: '0 5px',
-                // color:' #fff',
-                // backgroundColor: '#2d8cf0',
-                // borderColor:' #2d8cf0',
-                // fontWeight: '400',
-                // textAlign: 'center',
-                // width: '80',
-                // height: '40'
+ 
+    return[
+        h('Button', {
+            style: {
+                margin: '0 5px'
             },
             props: {
-                type: 'error',
-                placement: 'top',
-                size : 'big'
+                type: 'info',
+                placement: 'top'
             }
-        }, '详情')  
+        }, '详情')
+    ]
 };
 const incellEditBtn = (vm, h, param) => {
     if (vm.hoverShow) {
