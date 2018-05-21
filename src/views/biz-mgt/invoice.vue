@@ -61,6 +61,7 @@
                 // this.$Message.success(token);
                 let reqPage = this.page - 1;
                 console.log('requestt page:' + reqPage);
+                //获取订单列表数据
                 this.axios({
                     method: 'get',
                     url: '/api/invoice/invoice/list?page=' + reqPage + '&limit=' + this.limit
@@ -71,7 +72,6 @@
                     let content = result.content; 
                     // console.log(content)
                     this.totalPage = result.totalElements;
-                    // this.$Message.success(JSON.stringify(content));
                     this.invoiceData = content;
                 }).catch(error => {
                     this.$Message.error(error.message);

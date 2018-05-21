@@ -259,13 +259,15 @@ export const  invoiceColumns = [
         title: '购买方地址',
         width: 230,
         align: 'center',
-        key : 'address'
+        key : 'address',
+        editable: true        
     },
     {
         title: '总金额',
         width: 80,
         align: 'center',
-        key : 'amount'
+        editable: true,
+        key : 'amount',
     },
     // {
     //     title: 'checkcode',
@@ -311,7 +313,8 @@ export const  invoiceColumns = [
         title: '备注',
         width: 80,
         align: 'center',
-        key : 'remark'
+        key : 'remark',
+        editable: true        
     },
     // {
     //     title: '状态',
@@ -332,7 +335,7 @@ export const  invoiceColumns = [
         align: 'center',
         width: 180,
         key: 'handle',
-        handle: ['edit','delete']
+        handle: ['edit','delete','detail']
     },
 ];
 
@@ -353,7 +356,8 @@ export const  receptsColumns = [
         title: 'remark',
         width: 100,
         align: 'center',
-        key : 'remark'
+        key : 'remark',
+        editable: true        
     },
 ]
 

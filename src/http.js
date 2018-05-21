@@ -17,7 +17,7 @@ axios.defaults.timeout = 5000;
 axios.interceptors.request.use(
     config => {
         let token = Cookies.get('token');
-        console.log('http interceptor ' + token);
+        // console.log('http interceptor ' + token);
         if (token && !config.headers.Authorization) {
             config.headers.Authorization = `bearer ${token}`;
         }

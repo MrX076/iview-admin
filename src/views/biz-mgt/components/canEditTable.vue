@@ -30,6 +30,7 @@ const editButton = (vm, h, currentRow, index) => {
                     }
                     vm.edittingStore[index].editting = true;
                     vm.thisTableData = JSON.parse(JSON.stringify(vm.edittingStore));
+                   
                 } else {
                     vm.edittingStore[index].saving = true;
                     vm.thisTableData = JSON.parse(JSON.stringify(vm.edittingStore));
@@ -39,6 +40,14 @@ const editButton = (vm, h, currentRow, index) => {
                     vm.thisTableData = JSON.parse(JSON.stringify(vm.edittingStore));
                     vm.$emit('input', vm.handleBackdata(vm.thisTableData));
                     vm.$emit('on-change', vm.handleBackdata(vm.thisTableData), index);
+                    
+                    //修改数据
+                   
+                     axios.put('api/invoice/invoice' ,vm.thisTableData[index])
+                    .then(res => {
+                        this.$Message.success(res.data);
+                    })
+                     
                 }
             }
         }
@@ -87,11 +96,30 @@ const deleteButton = (vm, h, currentRow, index) => {
                 margin: '0 5px'
             },
             props: {
-                type: 'error',
+                type: 'primary',
                 placement: 'top'
             }
         }, '删除')
     ]);
+};
+const detailButton = (vm, h, currentRow, index) => {
+    return h('button', {
+         style: {
+                margin: '0 5px',
+                // color:' #fff',
+                // backgroundColor: '#2d8cf0',
+                // borderColor:' #2d8cf0',
+                // fontWeight: '400',
+                // textAlign: 'center',
+                // width: '80',
+                // height: '40'
+            },
+            props: {
+                type: 'error',
+                placement: 'top',
+                size : 'big'
+            }
+        }, '详情')  
 };
 const incellEditBtn = (vm, h, param) => {
     if (vm.hoverShow) {
@@ -109,6 +137,7 @@ const incellEditBtn = (vm, h, param) => {
                     click: (event) => {
                         vm.edittingStore[param.index].edittingCell[param.column.key] = true;
                         vm.thisTableData = JSON.parse(JSON.stringify(vm.edittingStore));
+                     
                     }
                 }
             })
@@ -123,6 +152,7 @@ const incellEditBtn = (vm, h, param) => {
                 click: (event) => {
                     vm.edittingStore[param.index].edittingCell[param.column.key] = true;
                     vm.thisTableData = JSON.parse(JSON.stringify(vm.edittingStore));
+                    console.log("保存")
                 }
             }
         });
@@ -162,7 +192,7 @@ const Todetail = (h) =>{
     return h('tr',{
         on:{
             'click' (event){
-                console.log(234);
+                console.log(256465486154);
             }
         }
     })
@@ -243,7 +273,12 @@ export default {
                                         type: 'flex',
                                         align: 'middle',
                                         justify: 'center'
-                                    }
+                                    },
+                                    // on : {
+                                    //     'click' (event) {
+                                    //         console.log(44465432165);
+                                    //     }
+                                    // }
                                 }, [
                                     h('Col', {
                                         props: {
@@ -286,8 +321,12 @@ export default {
                         item.handle.forEach(item => {
                             if (item === 'edit') {
                                 children.push(editButton(this, h, currentRowData, param.index));
-                            } else if (item === 'delete') {
+                            }
+                             else if (item === 'delete') {
                                 children.push(deleteButton(this, h, currentRowData, param.index));
+                            }
+                            else if (item === 'detail') {
+                                children.push(detailButton(this, h, currentRowData, param.index));
                             }
                         });
                         return h('div', children);
