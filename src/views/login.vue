@@ -119,7 +119,7 @@
                                 // 刷新router
                                 let data = menuResp.data.result;
                                 // console.log('before menu set:' + JSON.stringify(appRouter));
-                                // util.setRouterProps(appRouter, data);
+                                util.setRouterProps(appRouter, data);
                                 // console.log('after menu set:' + JSON.stringify(appRouter));
                             }).catch(error => {
                                 this.$Message.error('获取菜单列表失败:' + error.message);

@@ -25,13 +25,12 @@
                             :data="allRole"
                             :target-keys="menuRole"
                             :list-style="{width: '250px', height: '300px'}"
-                            :render-format="render3"
-                            :titles="['未拥有角色','已拥有角色']"
+                            :titles="['未拥有此菜单权限的角色','已拥有此菜单权限的角色']"
                             :operations="['移除','增加']"
                             @on-change="roleChange"></Transfer>
                 </div>
                 <div slot="footer">
-                    <Button type="info" size="large" long :loading="modal_loading" @click="del">确定</Button>
+                    <Button type="info" size="large" long :loading="sending" @click="confirm">确定</Button>
                 </div>
             </Modal>
             <Row class="margin-top-10">
@@ -68,10 +67,13 @@
 </template>
 
 <script>
+    import {appRouter} from '../../router/router';
+    import util from '@/libs/util.js';
     export default {
         data () {
             return {
                 roleModel: false,
+                sending: false,
                 allRole: [
                     {
                         label: 'Content all',
@@ -182,10 +184,11 @@
                 ]);
             },
             getMenuRoles (data) {
+                this.menuId = data.id;
                 this.roleModel = true;
                 this.axios({
                     method: 'get',
-                    url: '/api/invoice/menu/roles?menuId=' + data.id
+                    url: '/api/invoice/menu/roles?menuId=' + this.menuId
                 }).then(resp => {
                     let reqData = resp.data.result;
                     for (let item of reqData) {
@@ -193,10 +196,12 @@
                         item['label'] = item['name'];
                         item['description'] = item['remark'];
                     }
-                    console.log('menuRole:' + JSON.stringify(reqData));
-                    this.menuRole=reqData;
+                    this.menuRole = reqData.map(item => item.key);
+                    console.log('menuRole:' + JSON.stringify(this.menuRole));
+                    // this.menuRole = reqData;
                 }).catch(error => {
                     this.$Message.error(error.message);
+                    this.getMenuRoles();
                 });
             },
             getAllRole () {
@@ -205,10 +210,16 @@
                     url: '/api/invoice/role/all'
                 }).then(resp => {
                     let reqData = resp.data.result;
-                    console.log('treeData:' + this.treeData[0].children);
-                    // this.treeData[0].children = reqData;
+                    for (let item of reqData) {
+                        item['key'] = item['id'];
+                        item['label'] = item['name'];
+                        item['description'] = item['remark'];
+                    }
+                    console.log('allRole:' + JSON.stringify(reqData));
+                    this.allRole = reqData;
                 }).catch(error => {
                     this.$Message.error(error.message);
+                    this.getAllRole();
                 });
             },
             getData () {
@@ -221,25 +232,51 @@
                     this.treeData[0].children = reqData;
                 }).catch(error => {
                     this.$Message.error(error.message);
+                    this.getData();
                 });
             },
             roleChange (newTargetKeys) {
                 // menuRole=newTargetKeys;
+                this.menuRole = newTargetKeys;
                 console.log(newTargetKeys);
             },
-            append (data) {
-                const children = data.children || [];
-                children.push({
-                    title: 'appended node',
-                    expand: true
+            confirm () {
+                this.sending = true;
+                this.axios({
+                    method: 'put',
+                    url: '/api/invoice/menu/roles',
+                    params: {
+                        menuId: this.menuId
+                    },
+                    data: this.menuRole
+                }).then(resp => {
+                    this.sending = false;
+                    this.roleModel = false;
+                    this.$Message.success('success');
+
+                    // 更新菜单
+                    this.updateMenu();
+                }).catch(error => {
+                    this.sending = false;
+                    this.$Message.error(error.message);
                 });
-                this.$set(data, 'children', children);
             },
-            remove (root, node, data) {
-                const parentKey = root.find(el => el === node).parent;
-                const parent = root.find(el => el.nodeKey === parentKey).node;
-                const index = parent.children.indexOf(data);
-                parent.children.splice(index, 1);
+            updateMenu () {
+                this.axios({
+                    method: 'get',
+                    url: '/api/invoice/menu/menuRole'
+                }).then(menuResp => {
+                    // 刷新router
+                    let data = menuResp.data.result;
+                    // console.log('before menu set:' + JSON.stringify(appRouter));
+                    util.setRouterProps(appRouter, data);
+                    // console.log('after menu set:' + JSON.stringify(appRouter));
+                    this.$store.commit('updateMenulist');
+                    this.$Message.success('更新路由菜单成功');
+                }).catch(error => {
+                    this.$Message.error('获取菜单列表失败:' + error.message);
+                    this.updateMenu();
+                });
             }
         },
     
