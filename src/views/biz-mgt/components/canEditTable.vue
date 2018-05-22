@@ -140,7 +140,7 @@ const detailButton = (vm, h, currentRow, index) => {
                     <span>taxpyerCode：${vm.thisTableData[index].taxpayerCode}</span>
                     <span>备注：${vm.thisTableData[index].remark}</span>
                      </div>
-                    <div id="btn-close"><button id='close' ">关闭</button></div>
+                
                     `
                     div.innerHTML = html;
                     div.id="detail";
@@ -150,11 +150,11 @@ const detailButton = (vm, h, currentRow, index) => {
                     console.log(index)
                     let x=(index+1)*2-2;
                     let y=(index+1)*2-1;
-                   document.getElementsByClassName("ivu-btn-info")[x].style={width:"0px",padding:"0px",border:"none"};
-                    document.getElementsByClassName("ivu-btn-info")[x].setAttribute("style","width:0px;padding:0px;border:none;margin:0px 5px;")
+                   
+                    document.getElementsByClassName("ivu-btn-info")[x].setAttribute("style","width:0px;padding:0px;border:none;margin:0px;");
                     // document.getElementsByClassName("ivu-btn-info")[x].style.padding="0px";
                     // document.getElementsByClassName("ivu-btn-info")[x].style.border="none";
-                    document.getElementsByClassName("ivu-btn-info")[y].style.width= "60px";
+                    document.getElementsByClassName("ivu-btn-info")[y].setAttribute("style","width:120px;padding:0 16px;border:1px solid ;margin:0px 5px;")
    
 
 
@@ -179,15 +179,13 @@ const detailButton = (vm, h, currentRow, index) => {
                     console.log( document.getElementsByClassName("ivu-btn-info"));
                     let x=(index+1)*2-2;
                     let y=(index+1)*2-1;
-                    document.getElementsByClassName("ivu-btn-info")[x].style.width="60px";
-                    document.getElementsByClassName("ivu-btn-info")[y].style.width="0px";
-                    document.getElementsByClassName("ivu-btn-info")[y].style.padding="0px";
-                    document.getElementsByClassName("ivu-btn-info")[y].style.border="none";
+                    document.getElementsByClassName("ivu-btn-info")[y].setAttribute("style","width:0px;padding:0px;border:none;margin:0px 5px;");
+                    document.getElementsByClassName("ivu-btn-info")[x].setAttribute("style","width:120px;padding:0 16px;border:1px solid ;margin:0px 5px;")
                     detail.remove();  
                     vm.$emit('remove', vm.handleBackdata(vm.thisTableData));                 
                 }
             }
-        }, '关闭详情'),
+        }, '关闭'),
     ]
 };
 const incellEditBtn = (vm, h, param) => {

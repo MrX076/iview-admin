@@ -184,7 +184,7 @@ export const editInlineAndCellColumn = [
     {
         title: '操作',
         align: 'center',
-        width: 200,
+        width: 160,
         key: 'handle',
         handle: ['edit', 'delete']
     }
@@ -253,7 +253,7 @@ export const  invoiceColumns = [
     },
     {
         title: '购买方银行账户',
-        width: 188,
+        width: 200,
         align: 'center',
         key : 'account',
         editable: true        
@@ -268,7 +268,7 @@ export const  invoiceColumns = [
     },
     {
         title: '总金额',
-        width: 80,
+        width: 82,
         align: 'center',
         editable: true,
         key : 'amount',
@@ -339,7 +339,7 @@ export const  invoiceColumns = [
     {
         title: '操作',
         align: 'center',
-        width: 236,
+        width: 222,
         key: 'handle', 
         handle: ['edit','delete','detail']
     },
