@@ -147,12 +147,13 @@
                     let result = resp.data.result;
                     let content = result.content; 
                     // console.log(result.totalElements)
-                    if(result.totalElements/this.limit==0){
-                        this.total = result.totalElements;
-                    }
-                    else{
-                        this.total = result.totalElements+this.limit;
-                    }                  
+                    this.total = result.totalElements;
+                    // if(result.totalElements/this.limit==0){
+                    //     this.total = result.totalElements;
+                    // }
+                    // else{
+                    //     this.total = result.totalElements+this.limit;
+                    // }                  
                     this.invoiceData = content;
                 }).catch(error => {
                     this.$Message.error(error.message);
@@ -209,13 +210,19 @@
                     })
 
                                     
-            }
+            },
+            // closedetail(){
+            //     document.getElementById("close").onclick=function(){
+            //         console.log(153456456645)
+            //     }
+            // }
             
 
         },
         created() {
 
             this.getData();
+            // this.closedetail();
         }
     };
 </script>

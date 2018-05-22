@@ -9,6 +9,9 @@
     .ivu-card-body {
         min-height: 550px;
     }
+    .ivu-modal-footer{
+        display: block;
+    }
 </style>
 
 <template>

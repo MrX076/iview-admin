@@ -1,11 +1,12 @@
 <style lang="less">
     @import './editable-table.less';
+    @import '../invoice.less';
 </style>
 
 <template>
     <div>
         <!-- //  @on-current-change="recordCue()" -->
-        <Table highlight-row :ref="refs" :columns="columnsList" :data="thisTableData" border disabled-hover   @on-current-change="clickRow()"></Table>
+        <Table highlight-row :ref="refs" :columns="columnsList" :data="thisTableData" border disabled-hover  ></Table>
     </div>
 </template>
 
@@ -110,24 +111,83 @@ const detailButton = (vm, h, currentRow, index) => {
   return  [
         h('Button', {
             style: {
-                margin: '0 5px'
+                margin: '0 5px',
+                
             },
             props: {
                 type: 'info',
                 placement: 'top'
             },
             on : {
-                'click': (event)=>{
-                    // let ro = vm.thisTableData;
-                    console.log(vm._props.roleModel);
-                     this.$emit("changeRo",!vm._props.roleModel)
-                    
-                    // console.log(h);
-                    return vm._props.roleModel = !vm._props.roleModel;
+                'click': (event)=>{            
+                    vm.thisTableData
+                    // console.log(vm.thisTableData);
+                    var div=document.createElement("div");
+                    var html = `
+                    <h1>发票详情展示</h1>
+                    <div class="content">
+                    <span> 发票id：${vm.thisTableData[index].id}</span>
+                    <span>购买方名称：${vm.thisTableData[index].name}</span>
+                    <span>够买方银行账户：${vm.thisTableData[index].account}</span>
+                    <span>地址：${vm.thisTableData[index].address}</span>
+                    <span>总金额：${vm.thisTableData[index].amount}</span>
+                    <span>校验码：${vm.thisTableData[index].checkCode}</span>
+                    <span>发票代码：${vm.thisTableData[index].invoiceCode}</span>
+                    <span>发票号：${vm.thisTableData[index].invoiceNo}</span>
+                    <span>发票日期：${vm.thisTableData[index].invoiceData}</span>
+                    <span>卖方名称：${vm.thisTableData[index].sellerName}</span>
+                    <span>卖方纳税识别号：${vm.thisTableData[index].sellerCode}</span>
+                    <span>taxpyerCode：${vm.thisTableData[index].taxpayerCode}</span>
+                    <span>备注：${vm.thisTableData[index].remark}</span>
+                     </div>
+                    <div id="btn-close"><button id='close' ">关闭</button></div>
+                    `
+                    div.innerHTML = html;
+                    div.id="detail";
+                    // this.closedetail();
+                    //插入到最前面
+                    document.body.insertBefore(div, document.body.firstElementChild);
+                    console.log(index)
+                    let x=(index+1)*2-2;
+                    let y=(index+1)*2-1;
+                   document.getElementsByClassName("ivu-btn-info")[x].style={width:"0px",padding:"0px",border:"none"};
+                    document.getElementsByClassName("ivu-btn-info")[x].setAttribute("style","width:0px;padding:0px;border:none;margin:0px 5px;")
+                    // document.getElementsByClassName("ivu-btn-info")[x].style.padding="0px";
+                    // document.getElementsByClassName("ivu-btn-info")[x].style.border="none";
+                    document.getElementsByClassName("ivu-btn-info")[y].style.width= "60px";
+   
+
 
                 }
+                
+            },
+          
+        }, '详情'),
+                h('Button', {
+            style: {
+                margin: '0 5px',               
+            },
+            
+            props: {
+                type: 'info',
+                placement: 'top'
+            },
+            on : {
+                'click' : (event)=>{
+                    var  detail = document.getElementById('detail');
+                    // console.log(detail);
+                    console.log( document.getElementsByClassName("ivu-btn-info"));
+                    let x=(index+1)*2-2;
+                    let y=(index+1)*2-1;
+                    document.getElementsByClassName("ivu-btn-info")[x].style.width="60px";
+                    document.getElementsByClassName("ivu-btn-info")[y].style.width="0px";
+                    document.getElementsByClassName("ivu-btn-info")[y].style.padding="0px";
+                    document.getElementsByClassName("ivu-btn-info")[y].style.border="none";
+                    detail.remove();  
+                    vm.$emit('remove', vm.handleBackdata(vm.thisTableData));                 
+                }
             }
-        }, '详情')
+        }, '关闭详情'),
     ]
 };
 const incellEditBtn = (vm, h, param) => {
@@ -237,6 +297,7 @@ export default {
     },
     created () {
         this.init();
+       
     },
     methods: {
         init () {
@@ -357,22 +418,13 @@ export default {
                 delete item.saving;
             });
             return clonedData;
-        },
-        // recordCue(cur,old){
-        //     console.log('cur row change :'+cur);
-        //     this.currow=cur;
-        // },
-        clickRow(){
-           
-            console.log(this);
-        }
-        // Todetail(){
-        //     console.log("qwedas");
-        // }
+        },  
+         
+        
     },
     watch: {
         value (data) {
-            this.init();
+            this.init();  
         }
     }
 };
