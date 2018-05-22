@@ -196,8 +196,6 @@
                     let reqData = resp.data.result;
                     for (let item of reqData) {
                         item['key'] = item['id'];
-                        item['label'] = item['name'];
-                        item['description'] = item['remark'];
                     }
                     this.menuRole = reqData.map(item => item.key);
                     console.log('menuRole:' + JSON.stringify(this.menuRole));
