@@ -271,7 +271,7 @@
                 });
             },
             removeRole () {
-                console.log('save role');
+                console.log('remove role');
                 this.$Loading.start();
                 this.axios({
                     method: 'delete',
