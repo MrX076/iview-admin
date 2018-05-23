@@ -10,7 +10,7 @@ import router from './router';
 import Cookies from 'js-cookie';
 
 // axios 配置
-axios.defaults.timeout = 5000;
+axios.defaults.timeout = 10000;
 // axios.defaults.baseURL = 'https://api.github.com';
 
 // http request 拦截器
