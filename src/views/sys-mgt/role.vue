@@ -201,10 +201,7 @@
                     url: '/api/invoice/role/users?roleId=' + data.id
                 }).then(resp => {
                     let reqData = resp.data.result;
-                    for (let item of reqData) {
-                        item['key'] = item['id'];
-                    }
-                    this.ownerArray = reqData.map(item => item.key);
+                    this.ownerArray = reqData.map(item => item.id);
                     console.log('role-mgt get role user:' + JSON.stringify(this.ownerArray));
                 }).catch(error => {
                     this.$Message.error(error.message);
@@ -271,7 +268,7 @@
                 });
             },
             removeRole () {
-                console.log('save role');
+                console.log('remove role');
                 this.$Loading.start();
                 this.axios({
                     method: 'delete',
@@ -350,7 +347,7 @@
             getAllUser () {
                 this.axios({
                     method: 'get',
-                    url: '/api/invoice//user/all'
+                    url: '/api/invoice/user/all'
                 }).then(resp => {
                     let reqData = resp.data.result;
                     for (let item of reqData) {

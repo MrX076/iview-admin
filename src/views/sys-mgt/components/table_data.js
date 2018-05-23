@@ -14,7 +14,7 @@ export const table1Columns = [
     {
         title: '性别',
         align: 'center',
-        width: 80,        
+        width: 80,
         key: 'sex'
     },
     {
@@ -67,8 +67,9 @@ export const userColumns = [
     {
         title: '电话',
         align: 'center',
-        width: 160,        
-        key: 'phone'
+        width: 160,
+        key: 'phone',
+        editable: true
     },
     {
         title: '邮箱',
@@ -82,7 +83,7 @@ export const userColumns = [
         align: 'center',
         width: 160,
         key: 'handle',
-        handle: ['edit','delete']
+        handle: ['edit', 'delete']
     }
 ];
 
@@ -240,8 +241,6 @@ export const showCurrentColumns = [
     }
 ];
 
- 
-
 const tableData = {
     table1Columns: table1Columns,
     table1Data: table1Data,
@@ -251,8 +250,7 @@ const tableData = {
     editIncellData: editIncellData,
     editInlineAndCellColumn: editInlineAndCellColumn,
     editInlineAndCellData: editInlineAndCellData,
-    showCurrentColumns: showCurrentColumns,
-   
+    showCurrentColumns: showCurrentColumns
 };
 
 export default tableData;

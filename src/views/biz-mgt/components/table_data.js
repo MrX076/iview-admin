@@ -236,42 +236,41 @@ export const showCurrentColumns = [
     }
 ];
 
-export const  invoiceColumns = [
+export const invoiceColumns = [
     {
         title: 'id',
         width: 70,
         align: 'center',
-        key : 'id'
+        key: 'id'
     },
     {
         title: '买方',
         width: 120,
         align: 'center',
-        key : 'name',
-        editable: true        
-        
+        key: 'name',
+        editable: true
+
     },
     {
         title: '购买方银行账户',
         width: 200,
         align: 'center',
-        key : 'account',
-        editable: true        
-        
+        key: 'account',
+        editable: true
+
     },
     {
         title: '购买方地址',
-        width: 200,
         align: 'center',
-        key : 'address',
-        editable: true        
+        key: 'address',
+        editable: true
     },
     {
         title: '总金额',
         width: 82,
         align: 'center',
         editable: true,
-        key : 'amount',
+        key: 'amount',
     },
     // {
     //     title: 'checkcode',
@@ -306,21 +305,21 @@ export const  invoiceColumns = [
     //     align: 'center',
     //     key : 'name'
     // },
-   
+
     {
         title: '销售方',
         width: 120,
         align: 'center',
-        key : 'sellerName',
-        editable: true        
-        
+        key: 'sellerName',
+        editable: true
+
     },
-     {
+    {
         title: '备注',
         width: 80,
         align: 'center',
-        key : 'remark',
-        editable: true        
+        key: 'remark',
+        editable: true
     },
     // {
     //     title: '状态',
@@ -340,32 +339,32 @@ export const  invoiceColumns = [
         title: '操作',
         align: 'center',
         width: 222,
-        key: 'handle', 
-        handle: ['edit','delete','detail']
+        key: 'handle',
+        handle: ['edit', 'delete', 'detail']
     },
 ];
 
-export const  receptsColumns = [
+export const receptsColumns = [
     {
         title: 'id',
         width: 70,
         align: 'center',
-        key : 'id'
+        key: 'id'
     },
     {
         title: 'name',
         width: 100,
         align: 'center',
-        key : 'name',
-        editable: true        
-        
+        key: 'name',
+        editable: true
+
     },
     {
         title: 'remark',
         width: 100,
         align: 'center',
-        key : 'remark',
-        editable: true        
+        key: 'remark',
+        editable: true
     },
 ]
 
@@ -380,8 +379,8 @@ const tableData = {
     editInlineAndCellColumn: editInlineAndCellColumn,
     editInlineAndCellData: editInlineAndCellData,
     showCurrentColumns: showCurrentColumns,
-    invoiceColumns : invoiceColumns,  
-    receptsColumns : receptsColumns, 
+    invoiceColumns: invoiceColumns,
+    receptsColumns: receptsColumns,
 };
 
 export default tableData;
