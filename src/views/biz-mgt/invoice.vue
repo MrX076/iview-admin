@@ -106,7 +106,7 @@
     export default {
         name: 'editable-table',
         components: {
-            canEditTable,
+            canEditTable
         },
         // props:{
         //         roleModel: 'false',
@@ -119,9 +119,8 @@
                 limit: 8,
                 roleModel: false,
                 total: 0,
-                newData: [],
+                newData: []
             };
-
         },
 
         methods: {
@@ -131,7 +130,6 @@
                 this.getData();
             },
             getData () {
-
                 this.invoiceColumns = tableData.invoiceColumns;
                 this.roleModel = false;
                 let token = Cookies.get('token');
@@ -139,7 +137,7 @@
                 // this.$Message.success(token);
                 let reqPage = this.page - 1;
                 // console.log('requestt page:' + reqPage);
-                //获取订单列表数据
+                // 获取订单列表数据
                 this.axios({
                     method: 'get',
                     url: '/api/invoice/invoice/list?page=' + reqPage + '&limit=' + this.limit
@@ -155,28 +153,26 @@
                     // }
                     // else{
                     //     this.total = result.totalElements+this.limit;
-                    // }                  
+                    // }
                     this.invoiceData = content;
                 }).catch(error => {
                     this.$Message.error(error.message);
                 });
-
             },
 
             changeRo () {
                 this.roleModel = !this.roleModel;
             },
             addMsg () {
-
                 let form = document.getElementById('addForm');
                 let div = form.children;
 
                 for (let i = 0; i < div.length - 1; i++) {
-                    this.newData.push(div[i].children[1])
-                    console.log(this.newData[i].value)
+                    this.newData.push(div[i].children[1]);
+                    console.log(this.newData[i].value);
                 }
 
-                console.log(this.newData)
+                console.log(this.newData);
 
                 let newdata = {
                     name: this.newData[0].value,
@@ -190,10 +186,9 @@
                     invoiceDate: this.newData[8].value,
                     invoiceNo: this.newData[9].value,
                     taxpayerCode: this.newData[10].value,
-                    remark: this.newData[11].value,
+                    remark: this.newData[11].value
 
-
-                }
+                };
                 axios.post('api/invoice/invoice', JSON.stringify(newdata), {
                     headers: {
                         'Content-Type': 'application/json'
@@ -201,16 +196,12 @@
                 })
                     .then(res => {
                         // console.log(res.result);
-                        this.$Message.success("成功添加");
-                    })
-
-
-            },
-
+                        this.$Message.success('成功添加');
+                    });
+            }
 
         },
         created () {
-
             this.getData();
         }
     };
