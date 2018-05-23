@@ -116,12 +116,13 @@
                 invoiceData: [],
                 page: 1,
                 limit: 8,
-                roleModel: false,
+                roleModel: false, 
                 total: 0,
                 newData:[],
             };
            
         },
+
         methods: {
             changePage (page) {
                 console.log('changePage:' + page);
@@ -177,52 +178,41 @@
                 console.log(this.newData)
 
                 let newdata={
-                    account:this.newData[0].value,
-                    address: this.newData[1].value,
-                    amount: this.newData[2].value,
-                    checkCode : this.newData[3].value,
-                    invoiceCode : this.newData[4].value,
-                    invoiceNo : this.newData[5].value,
-                    invoiceDate : this.newData[6].value,
-                    name : this.newData[7].value,
-                    remark : this.newData[8].value,
-                    sellerCode : this.newData[9].value,
-                    sellerName : this.newData[10].value,
-                    taxpayerCode : this.newData[11].value,
+                    name : this.newData[0].value,
+                    account:this.newData[1].value,
+                    address: this.newData[2].value,
+                    amount: this.newData[3].value,
+                    sellerName : this.newData[4].value,
+                    sellerCode : this.newData[5].value,
+                    checkCode : this.newData[6].value,
+                    invoiceCode : this.newData[7].value,
+                    invoiceDate : this.newData[8].value,
+                    invoiceNo : this.newData[9].value,
+                    taxpayerCode : this.newData[10].value,
+                    remark : this.newData[11].value,
+                    
+                   
+                    
                 }
-                console.log(JSON.stringify(newdata));
-                console.log(newdata)
-                setTimeout(() => {
-                    alert(123)
-                }, 3000);
-                // alert(newdata);
-               
-
-                
-                // console.log(data);
                     axios.post('api/invoice/invoice',JSON.stringify(newdata),{
                              headers: {
                             'Content-Type': 'application/json'
                       }
                     })
                     .then(res => {
+                        // console.log(res.result);
                         this.$Message.success("成功添加");
                     })
 
                                     
             },
-            // closedetail(){
-            //     document.getElementById("close").onclick=function(){
-            //         console.log(153456456645)
-            //     }
-            // }
+        
             
 
         },
         created() {
 
             this.getData();
-            // this.closedetail();
         }
     };
 </script>
