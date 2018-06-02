@@ -41,8 +41,11 @@ const app = {
             let auths = JSON.parse(Cookies.get('user'))['authorities'];
             // let accessCode = Cookies.get('access');
             let menuList = [];
+            // debugger;
             // console.log('user info:' + Cookies.get('user'));
             // console.log('check user auths update menu:' + auths);
+            console.log('updataMenuList:');
+            console.log(appRouter);
             appRouter.forEach((item, index) => {
                 if (item.access !== undefined && item.access.length > 0) {
                     for (let accessCode of auths) {
@@ -54,7 +57,7 @@ const app = {
                                 let childrenArr = [];
                                 childrenArr = item.children.filter(child => {
                                     if (child.access !== undefined && child.access.length > 0) {
-                                        if (child.access === accessCode) {
+                                        if (child.access.indexOf(accessCode) > -1) {
                                             return child;
                                         }
                                     } else {
@@ -69,30 +72,32 @@ const app = {
                     if (item.children.length === 1) {
                         menuList.push(item);
                     } else {
-                        for (let accessCode of auths) {
-                            let len = menuList.push(item);
-                            let childrenArr = [];
-                            childrenArr = item.children.filter(child => {
-                                if (child.access !== undefined && child.access.length > 0) {
+                        // debugger;
+                        let len = menuList.push(item);
+                        let childrenArr = [];
+                        childrenArr = item.children.filter(child => {
+                            if (child.access !== undefined && child.access.length > 0) {
+                                for (let accessCode of auths) {
                                     if (Util.showThisRoute(child.access, accessCode)) {
                                         return child;
                                     }
-                                } else {
-                                    return child;
                                 }
-                            });
-                            if (childrenArr === undefined || childrenArr.length === 0) {
-                                menuList.splice(len - 1, 1);
                             } else {
-                                let handledItem = JSON.parse(JSON.stringify(menuList[len - 1]));
-                                handledItem.children = childrenArr;
-                                menuList.splice(len - 1, 1, handledItem);
+                                return child;
                             }
+                        });
+                        if (childrenArr === undefined || childrenArr.length === 0) {
+                            menuList.splice(len - 1, 1);
+                        } else {
+                            let handledItem = JSON.parse(JSON.stringify(menuList[len - 1]));
+                            handledItem.children = childrenArr;
+                            menuList.splice(len - 1, 1, handledItem);
                         }
                     }
                 }
             });
             state.menuList = menuList;
+            console.log(menuList);
         },
         changeMenuTheme (state, theme) {
             state.menuTheme = theme;
