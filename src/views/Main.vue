@@ -34,7 +34,7 @@
                 <div class="header-avator-con">
                     <full-screen v-model="isFullScreen" @on-change="fullscreenChange"></full-screen>
                     <lock-screen></lock-screen>
-                    <message-tip v-model="mesCount"></message-tip>
+                    <!--<message-tip v-model="mesCount"></message-tip>-->
                     <theme-switch></theme-switch>
                     
                     <div class="user-dropdown-menu-con">
@@ -78,6 +78,7 @@
     import Cookies from 'js-cookie';
     import util from '@/libs/util.js';
     import scrollBar from '@/views/my-components/scroll-bar/vue-scroller-bars';
+    import {appRouter} from '../router/router';
     
     export default {
         components: {
@@ -127,7 +128,22 @@
         methods: {
             init () {
                 let pathArr = util.setCurrentPath(this, this.$route.name);
-                this.$store.commit('updateMenulist');
+                // 获取菜单列表
+                this.axios({
+                    method: 'get',
+                    url: '/api/invoice/menu/menuRole'
+                }).then(menuResp => {
+                    // 刷新router
+                    let data = menuResp.data.result;
+                    util.setRouterProps(appRouter, data);
+                    console.log(menuResp);
+                    this.$store.commit('updateMenulist');
+                }).catch(error => {
+                    console.log('获取菜单列表失败');
+                    console.log(error);
+                    this.$Message.error('获取菜单列表失败:' + error.message);
+                });
+                // this.$store.commit('updateMenulist');
                 if (pathArr.length >= 2) {
                     this.$store.commit('addOpenSubmenu', pathArr[1].name);
                 }
