@@ -107,27 +107,40 @@
                                     name: 'home_index'
                                 });
                                 this.$Message.success('check user info success：' + JSON.stringify(tokenResp.data));
+
+                                // 获取菜单列表
+                                this.axios({
+                                    method: 'get',
+                                    url: '/api/invoice/menu/menuRole'
+                                }).then(menuResp => {
+                                    // 刷新router
+                                    let data = menuResp.data.result;
+                                    console.log('before menu set:');
+                                    console.log(appRouter);
+                                    console.log('data:');
+                                    console.log(data);
+                                    util.setRouterProps(appRouter, data);
+                                    // this.$store.commit('updateMenulist');
+                                    console.log('after menu set:');
+                                    console.log(appRouter);
+
+                                    // 跳转主菜单
+                                    this.$router.push({
+                                        name: 'home_index'
+                                    });
+                                }).catch(error => {
+                                    console.log('获取菜单列表失败');
+                                    console.log(error);
+                                    this.$Message.error('获取菜单列表失败:' + error.message);
+                                });
                             }).catch(error => {
                                 this.$Message.error(error.message);
-                            });
-
-                            // 获取菜单列表
-                            this.axios({
-                                method: 'get',
-                                url: '/api/invoice/menu/menuRole'
-                            }).then(menuResp => {
-                                // 刷新router
-                                let data = menuResp.data.result;
-                                // console.log('before menu set:' + JSON.stringify(appRouter));
-                                util.setRouterProps(appRouter, data);
-                                // console.log('after menu set:' + JSON.stringify(appRouter));
-                            }).catch(error => {
-                                this.$Message.error('获取菜单列表失败:' + error.message);
                             });
                         }).catch(error => {
                             this.$Message.error(error.message);
                             this.$Loading.error();
                         });
+
                         // Cookies.set('user', this.form.userName);
                         // Cookies.set('password', this.form.password);
                         // this.$store.commit('setAvator', 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3448484253,3685836170&fm=27&gp=0.jpg');

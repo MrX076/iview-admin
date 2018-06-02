@@ -95,7 +95,7 @@ export default {
                     key: 'address'
                 }
             ],
-            data9: [
+            receiptData: [
                 {
                     name: '王小明',
                     age: 18,
