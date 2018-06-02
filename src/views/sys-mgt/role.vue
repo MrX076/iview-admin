@@ -7,7 +7,7 @@
     }
 
     .ivu-modal-footer {
-        display: none;
+        display: none !important;
     }
 </style>
 

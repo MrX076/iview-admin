@@ -3,7 +3,7 @@
     @import './components/table.less';
 
     .ivu-modal-footer {
-        display: none;
+        display: none !important;
     }
 </style>
 
@@ -304,7 +304,7 @@
             getAllReceipt () {
                 this.axios({
                     method: 'get',
-                    url: '/api/invoice/receipt/all'
+                    url: '/api/invoice/receipt/curAll'
                 }).then(resp => {
                     let reqData = resp.data.result;
                     // 设置可选中状态：只有fail或者created可被选中

@@ -9,8 +9,9 @@
     .ivu-card-body {
         min-height: 550px;
     }
-    .ivu-modal-footer{
-        display: block;
+
+    .ivu-modal-footer {
+        display: block !important;
     }
 </style>
 
@@ -72,6 +73,7 @@
 <script>
     import {appRouter} from '../../router/router';
     import util from '@/libs/util.js';
+
     export default {
         data () {
             return {
@@ -269,8 +271,14 @@
                 }).then(menuResp => {
                     // 刷新router
                     let data = menuResp.data.result;
+                    console.log('before menu update menu:');
+                    console.log(appRouter);
                     // console.log('before menu set:' + JSON.stringify(appRouter));
                     util.setRouterProps(appRouter, data);
+                    let t = Date.now();
+                    while (Date.now - t <= 2000) ;
+                    console.log('after menu update menu:');
+                    console.log(appRouter);
                     // console.log('after menu set:' + JSON.stringify(appRouter));
                     this.$store.commit('updateMenulist');
                     this.$Message.success('更新路由菜单成功');
@@ -280,7 +288,7 @@
                 });
             }
         },
-    
+
         created () {
             this.getData();
             this.getAllRole();
